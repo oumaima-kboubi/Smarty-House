@@ -178,7 +178,7 @@ class User extends BaseUser implements UserInterface
     public function setHouseId(?SmartHouse $houseId): self
     {
         $this->houseId = $houseId;
-
+        
         return $this;
     }
 }
