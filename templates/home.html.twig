@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+
+{#{% if  (is_granted("ROLE_OWNER") and (is_granted("ROLE_RESIDENT"))) %}#}
+
+{#        {% include 'fragments/carousel.html.twig' %}#}
+{#        {% include 'fragments/poppingOptions.html.twig' %}#}
+
+{% if is_granted("ROLE_OWNER") %}
+
+        {% include 'fragments/carousel.html.twig' %}
+
+        {% include 'fragments/poppingOptions.html.twig' %}
+        {% include 'fragments/sideNote.html.twig' %}
+        {% include 'fragments/quotes.html.twig' %}
+
+{% elseif is_granted("ROLE_RESIDENT") %}
+        {% include 'fragments/carousel.html.twig' %}
+        {% include 'fragments/poppingOptions.html.twig' %}
+        {% include 'fragments/sideNote.html.twig' %}
+        {% include 'fragments/quotes.html.twig' %}
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block title %}Services {% endblock %}
+{% block body %}
+{% include 'fragments/poppingOptions.html.twig' %}
+<br>
+    <div style="padding-bottom: 20px; padding-right: 20px">
+
+<button class="btn btn-info " onclick=" location.href='{{ path('home_in') }}';" style="float: right;" >GO BACK HOME</button>
+    </div>
+{% endblock %}

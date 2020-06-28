@@ -1,0 +1,15 @@
+fos_user:
+  db_driver: orm
+  firewall_name: main
+  user_class: App\Entity\User
+  from_email:
+    address: 'smartyhousenoreply@gmail.com'
+    sender_name: 'Smarty House'
+  registration:
+    form:
+      type: App\Form\RegistrationType
+    confirmation:
+      enabled: true
+  profile:
+    form:
+      type: App\Form\ProfileType

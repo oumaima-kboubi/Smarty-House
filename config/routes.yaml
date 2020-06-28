@@ -1,3 +1,24 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+fos_user:
+  resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+privacy_policy_in:
+  path: /privacyIn
+  controller: "src/Controller/RoutingController::privacyIn"
+privacy_policy_out:
+  path: /privacyOut
+  controller: "src/Controller/RoutingController::privacyOut"
+terms_of_use_in:
+  path: /useIn
+  controller: "src/Controller/RoutingController::useIn"
+terms_of_use_out:
+  path: /useOut
+  controller: "src/Controller/RoutingController::useOut"
+home_in:
+  path: /test
+  controller: "src/Controller/FirstController::test"
+services:
+  path: /services
+  controller: "src/Controller/RoutingController::services"

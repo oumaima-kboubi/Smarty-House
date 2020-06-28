@@ -1,15 +1,60 @@
 security:
+#    always_authenticate_before_granting: false
+#    access_denied_url:    null # Example: /foo/error403
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users_in_memory: { memory: null }
+        our_db_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+    role_hierarchy:
+        ROLE_RESIDENT: ROLE_RESIDENT
+        ROLE_OWNER: ROLE_OWNER
+        ROLE_USER: ROLE_USER
+        ROLE_ADMIN: [ROLE_USER,ROLE_ADMIN,ROLE_RESIDENT,ROLE_OWNER]
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: lazy
-            provider: users_in_memory
+            pattern: ^/
+            user_checker: security.user_checker
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+                default_target_path: /test
+#                remember_me: true
+#    failure_path:         null
+#                failure_forward:      false
 
+#        remember_me:
+#            secret:   %secret%           # ~ Required
+#            token_provider:       ~
+#            user_providers:       []
+#            catch_exceptions:     true
+#            name:                 REMEMBERME
+#            lifetime:             31536000
+#            path:                 /   fos_user_resetting_request
+#            domain:               null
+#            secure:               false # One of true; false; "auto"
+#            httponly:             true
+#            samesite:             null # One of null; "lax"; "strict"; "none"
+#            always_remember_me:   false
+#            remember_me_parameter: _remember_me
+
+            logout:
+                path: fos_user_security_logout
+                target: fos_user_security_login
+            anonymous:    true
+            logout_on_user_change: true
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
@@ -18,6 +63,16 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
-    access_control:
+    access_control: #wilyeeeeyy hahahahahahah
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, role: ROLE_ADMIN }
+        - { path: ^/home, role: [ROLE_USER,ROLE_OWNER,ROLE_RESIDENT,ROLE_ADMIN] }
+        - { path: ^/test, role: [ROLE_USER,ROLE_OWNER,ROLE_RESIDENT,ROLE_ADMIN] }
+        - { path: ^/device, role: [ROLE_OWNER,ROLE_RESIDENT] }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt

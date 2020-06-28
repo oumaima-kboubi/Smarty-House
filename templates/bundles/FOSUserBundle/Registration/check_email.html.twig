@@ -1,0 +1,14 @@
+{% extends "@FOSUser/showlayout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+<main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
+    <div class="container" style="padding-bottom: 40px ; padding-top: 50px">
+        <div class="card" style=" padding: 60px; border-radius: 10px;">
+    <p class="alert alert-info">{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+        </div>
+    </div>
+</main>
+{% endblock fos_user_content %}

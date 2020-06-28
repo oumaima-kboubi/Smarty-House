@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Smarty House Register </title>
+    <link rel="stylesheet" href={{ asset('css/style.css') }}>
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href={{ asset('css/bootstrap.min.css') }}>
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+</head>
+<body style="padding-top: 50px">
+{% include 'fragments/navbar.html.twig' %}
+<main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
+    <div class="container" style="padding: 40px">
+        <div class="card login-card">
+            <div class="row no-gutters">
+                <div class="col-md-5">
+                    <img src="{{ asset('images/login.jpg') }}" alt="login" class="login-card-img">
+                </div>
+                <div class="col-md-7">
+{#                    <p align="right">hii</p>#}
+                    <div class="card-body" align="center">
+                        <div class="brand-wrapper">
+                            <h1 class="logo" style="color : #0f6674"> Smarty House</h1>
+                            {#<img src="{{asset('images/smartyHouseBlack2.png')}}" alt="logo" class="logo" heig >#}
+                        </div>
+                        <p class="login-card-description" style="font-size: x-large">Resgister</p>
+
+                        {% block body %} {% endblock %}
+                        <p class="login-card-footer-text">Have an account? <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }} from here</a></p>
+                        <nav class="login-card-footer-nav">
+                            <a href="{{path('terms_of_use_out')}}">Terms of use.</a>
+                            <a href="{{path('privacy_policy_out')}}">Privacy policy</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% include 'fragments/footer.html.twig' %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

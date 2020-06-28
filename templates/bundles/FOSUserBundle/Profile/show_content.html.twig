@@ -1,0 +1,73 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+
+    {% if is_granted("ROLE_OWNER") or is_granted("ROLE_RESIDENT") or is_granted("ROLE_ADMIN") %}
+        <main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
+            <div class="container" style="padding-bottom: 40px">
+
+                <div class="card" style=" padding: 40px; border-radius: 10px">
+                    <div class="fos_user_user_show">
+                        <h1 class="logo" style="color : #138496 ; text-align: center">Profile</h1> <br><br>
+                        <img alt="{{ user.username }}" src="{{ user.path }}" class="rounded-circle text-center"> <br>
+                        {% if app.request.hasPreviousSession %}
+                            {% for type, messages in app.session.flashbag.all() %}
+                                {% for message in messages %}
+                                    <div class="flash-{{ type }} alert alert-success">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                        <br>
+                        <div class="row">
+                            <div class="col-5 text-info"><p><b>{{ 'profile.show.username'|trans }}:</b></p></div>
+                            <div class="col-7"><p>{{ user.username }}</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 text-info"><p><b>Firstname:</b></p></div>
+                            <div class="col-7"><p>{{ user.firstname }}</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 text-info"><p><b>Lastname:</b></p></div>
+                            <div class="col-7"><p>{{ user.lastname }}</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 text-info"><p><b>Cin:</b></p></div>
+                            <div class="col-7"><p>{{ user.cin }}</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 text-info"><p><b>Birthdate:</b></p></div>
+                            <div class="col-7"><p>{{ user.birthdate | date('d/m/Y') }}</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 text-info"><p><b>Gender:</b></p></div>
+                            <div class="col-7"><p>{{ user.gender }}</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 text-info"><p><b>{{ 'profile.show.email'|trans }}:</b></p></div>
+                            <div class="col-7"><p>{{ user.email }}</p></div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group-toggle text-center">
+                        <button class="btn btn-dark rounded" type="button" style="width: -moz-fit-content"
+                                onclick=" location.href='{{ path('fos_user_profile_edit') }}';">Edit Login Credentials
+                        </button>
+                        <button class="btn btn-dark rounded" type="button"
+                                onclick=" location.href='{{ path('fos_user_change_password') }}';">Change Password
+                        </button>
+                        <button class="btn btn-dark rounded" type="button"
+                                onclick=" location.href='{{ path('fos_user_change_password') }}';">Edit Personal Credentials
+                        </button>
+                        {#                        <button class="btn btn-dark rounded" type="button"#}
+                        {#                                onclick=" location.href='{{ path('fos_user_change_password') }}';">CHANGE PASSWORD#}
+                        {#                        </button>#}
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+    {% endif %}
+{% endblock %}

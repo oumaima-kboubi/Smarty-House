@@ -1,0 +1,10 @@
+{% extends "@FOSUser/loginlayout.html.twig" %}
+{% block formTitle %} {% endblock %}
+{% block fos_user_content %}
+    {{ include('@FOSUser/Security/login_content.html.twig') }}
+{% endblock fos_user_content %}
+
+{#{% extends "templates/login.html.twig" %}#}
+{#{% block fos_user_content %}#}
+{#{{ include('@FOSUser/Security/login_content.html.twig') }}#}
+{#{% endblock fos_user_content %}#}
