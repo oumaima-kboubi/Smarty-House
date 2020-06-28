@@ -30,6 +30,7 @@ class GenerateDataController extends AbstractController
                 $this->createDevices($room);
             }
         }
+        //$entityManager->persist($flush);
         return $this->render('generate_data/index.html.twig', [
             'controller_name' => 'GenerateDataController',
         ]);
@@ -208,6 +209,11 @@ class GenerateDataController extends AbstractController
         $range->setName($name);
         $range->setMin($min);
         $range->setMax($max);
+        /*sensor/actuator code (ranges are always an actuator)
+            $actuator = new Actuator();
+            //add fields (you may need to add $range in setAttribut)
+            //$entityManager->persist($actuator);
+        */
         //unit is missing
         return $range;
     }
@@ -215,6 +221,11 @@ class GenerateDataController extends AbstractController
     private function newNumeric($name){
         $numeric = new Numeric();
         $numeric->setName($name);
+        /*sensor/actuator code (numerics are always a sensor)
+            $sensor = new Sensor();
+            //add fields (you may need to add $sensor in setAttribut)
+            //$entityManager->persist($sensor);
+        */
         //unit is missing
         return $numeric;
     }
@@ -224,6 +235,11 @@ class GenerateDataController extends AbstractController
         $toggle->setName($name);
         $toggle->setOnLabel($onLable);
         $toggle->setOffLable($offLable);
+        /*sensor/actuator code (toggles can be sensors (alarm) or actuator (on/off switch))
+            //this one is tricky you either create a sensor or an actuator based on the name
+            //in a switch($name)
+            //do newNumeric and newRange before
+        */
         return $toggle;
     }
 }
