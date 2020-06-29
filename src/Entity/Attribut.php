@@ -47,10 +47,16 @@ class Attribut
      */
     private $sensor;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Device::class, mappedBy="attributs")
+     */
+    private $device;
+
     public function __construct()
     {
         $this->metrics = new ArrayCollection();
         $this->presetID = new ArrayCollection();
+        $this->device = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -152,6 +158,37 @@ class Attribut
     public function setSensor(?Sensor $sensor): self
     {
         $this->sensor = $sensor;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Device[]
+     */
+    public function getDevice(): Collection
+    {
+        return $this->device;
+    }
+
+    public function addDevice(Device $device): self
+    {
+        if (!$this->device->contains($device)) {
+            $this->device[] = $device;
+            $device->setAttributs($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevice(Device $device): self
+    {
+        if ($this->device->contains($device)) {
+            $this->device->removeElement($device);
+            // set the owning side to null (unless already changed)
+            if ($device->getAttributs() === $this) {
+                $device->setAttributs(null);
+            }
+        }
 
         return $this;
     }

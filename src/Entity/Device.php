@@ -48,6 +48,11 @@ class Device
      */
     private $createdAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Attribut::class, inversedBy="device")
+     */
+    private $attributs;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +126,18 @@ class Device
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getAttributs(): ?Attribut
+    {
+        return $this->attributs;
+    }
+
+    public function setAttributs(?Attribut $attributs): self
+    {
+        $this->attributs = $attributs;
 
         return $this;
     }
