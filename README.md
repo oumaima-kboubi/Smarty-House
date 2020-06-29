@@ -4,4 +4,4 @@ The steps you need to follow:
 2) import the new database using the file 'domoyamo (1).sql'
 
 P.S:
-When pulling a project for the first time use the commande line: 'composer update' to downloade the packages needed.
+When pulling a project for the first time use the commande line: 'composer update' to download the packages needed.
