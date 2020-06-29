@@ -92,8 +92,16 @@
 
             </button>
             <div class="col-lg-4 text-center">
-                <div class="site-logo">
+                <div class=" row">
                     <em style="color: rosybrown !important;">Smarty House</em>
+{#                    <div class="col-1"> </div>#}
+{#                    <div class="col-1"> </div>#}
+                    <div class="col-1"> </div>
+                    <div class="col-1"> </div>
+                    <div class="col-5 text-white">Logged in: {{ app.user.username }} </div>
+                    <p style="text-align : center" class="col-1">
+                        <img src="{{ asset(app.user.path) }}" alt="{{ app.user.username }}" width="30px" height="30px" class="rounded-circle"  > <br>
+                    </p>
                 </div>
         </nav>
     </div>
