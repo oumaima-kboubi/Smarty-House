@@ -51,6 +51,11 @@ class Attribut
      * @ORM\ManyToOne(targetEntity=Device::class, inversedBy="relation")
      */
     private $device;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $deviceType;
 //
 //    /**
 //     * @ORM\OneToMany(targetEntity=Device::class, mappedBy="attributs")
@@ -224,6 +229,18 @@ public function getDevice(): ?Device
 public function setDevice(?Device $device): self
 {
     $this->device = $device;
+
+    return $this;
+}
+
+public function getDeviceType(): ?string
+{
+    return $this->deviceType;
+}
+
+public function setDeviceType(string $deviceType): self
+{
+    $this->deviceType = $deviceType;
 
     return $this;
 }}
