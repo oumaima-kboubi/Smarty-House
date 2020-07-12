@@ -33,6 +33,16 @@ class Metric
      */
     private $attribut;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $triggeredBy;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +80,30 @@ class Metric
     public function setAttribut(?Attribut $attribut): self
     {
         $this->attribut = $attribut;
+
+        return $this;
+    }
+
+    public function getTriggeredBy(): ?string
+    {
+        return $this->triggeredBy;
+    }
+
+    public function setTriggeredBy(string $triggeredBy): self
+    {
+        $this->triggeredBy = $triggeredBy;
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }

@@ -29,7 +29,7 @@ class RegistrationType extends AbstractType
             ->add('gender', ChoiceType::class, array(
                 'choices' => ['F' => 'F', 'M' => 'M']
             ))
-//            ->add('country',CountryType::class);
+            ->add('country',CountryType::class);
         ;
     }
 

@@ -66,6 +66,7 @@ class User extends BaseUser implements UserInterface
     {
         parent::__construct();
         $this->addRole("ROLE_RESIDENT");
+        $this->setPath('images/avatar.jpeg');
     }
     public function hasRole($role)
     {
