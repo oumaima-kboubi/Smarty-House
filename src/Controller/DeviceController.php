@@ -8,10 +8,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class DeviceController extends AbstractController
 {
     /**
-     * @Route("/device", name="device")
+     * @Route("/device/{paramHouse}/{paramRoom?all}", name="device")
      */
-    public function index()
+    public function index($paramHouse, $paramRoom)
     {
+        $repository = $this->getDoctrine()->getRepository('App:SmartHouse');
+        $house = $repository->find($paramHouse);
+        if($paramRoom = 'all'){
+            $rooms = $house->getLocations();
+        }else{
+            $rooms = $house->getLocation($paramRoom);
+        }
         return $this->render('device/index.html.twig', [
             'controller_name' => 'DeviceController',
         ]);
