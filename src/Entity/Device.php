@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DeviceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,9 +51,24 @@ class Device
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Attribut::class, inversedBy="device")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $attributs;
+    private $path;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Attribut::class, mappedBy="device")
+     */
+    private $relation;
+
+    public function __construct()
+    {
+        $this->relation = new ArrayCollection();
+    }
+
+//    /**
+//     * @ORM\ManyToOne(targetEntity=Attribut::class, inversedBy="device")
+//     */
+//    private $attributs;
 
     public function getId(): ?int
     {
@@ -130,15 +147,58 @@ class Device
         return $this;
     }
 
-    public function getAttributs(): ?Attribut
-    {
-        return $this->attributs;
-    }
+//    public function getAttributs(): ?Attribut
+//    {
+//        return $this->attributs;
+//    }
+//
+//    public function setAttributs(?Attribut $attributs): self
+//    {
+//        $this->attributs = $attributs;
+//
+//        return $this;
+//    }
 
-    public function setAttributs(?Attribut $attributs): self
-    {
-        $this->attributs = $attributs;
 
-        return $this;
-    }
+public function getPath(): ?string
+{
+    return $this->path;
 }
+
+public function setPath(?string $path): self
+{
+    $this->path = $path;
+
+    return $this;
+}
+
+/**
+ * @return Collection|Attribut[]
+ */
+public function getRelation(): Collection
+{
+    return $this->relation;
+}
+
+public function addRelation(Attribut $relation): self
+{
+    if (!$this->relation->contains($relation)) {
+        $this->relation[] = $relation;
+        $relation->setDevice($this);
+    }
+
+    return $this;
+}
+
+public function removeRelation(Attribut $relation): self
+{
+    if ($this->relation->contains($relation)) {
+        $this->relation->removeElement($relation);
+        // set the owning side to null (unless already changed)
+        if ($relation->getDevice() === $this) {
+            $relation->setDevice(null);
+        }
+    }
+
+    return $this;
+}}
