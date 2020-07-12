@@ -22,7 +22,7 @@
                     <img src="{{ asset('images/login.jpg') }}" alt="login" class="login-card-img">
                 </div>
                 <div class="col-md-7">
-{#                    <p align="right">hii</p>#}
+                    {#                    <p align="right">hii</p>#}
                     <div class="card-body" align="center">
                         <div class="brand-wrapper">
                             <h1 class="logo" style="color : #0f6674"> Smarty House</h1>
@@ -31,10 +31,12 @@
                         <p class="login-card-description" style="font-size: x-large">Resgister</p>
 
                         {% block body %} {% endblock %}
-                        <p class="login-card-footer-text">Have an account? <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }} from here</a></p>
+                        <p class="login-card-footer-text">Have an account? <a
+                                    href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+                                from here</a></p>
                         <nav class="login-card-footer-nav">
-                            <a href="{{path('terms_of_use_out')}}">Terms of use.</a>
-                            <a href="{{path('privacy_policy_out')}}">Privacy policy</a>
+                            <a href="{{ path('terms_of_use_out') }}">Terms of use.</a>
+                            <a href="{{ path('privacy_policy_out') }}">Privacy policy</a>
                             <br>
                             <a class="text-right text-info" href="{{ path('home_out') }}">GO BACK HOME</a>
                         </nav>
