@@ -17,13 +17,13 @@ use Faker;
 class GenerateDataController extends AbstractController
 {
     /**
-     * @Route("/generate/data", name="generate_data")
+     * @Route("/generate/addHouse/{nbrHouses?1}", name="generate_data")
      */
-    public function index()
+    public function index($nbrHouses)
     {
         
         $entityManager = $this->getDoctrine()->getManager();
-        for($a=0;$a<1;$a++){
+        for($a=0;$a<$nbrHouses;$a++){
             $smartHouse = $this->createSmartHouse($a);
             $rooms = $this->createRooms($smartHouse);
             foreach ($rooms as $room) {
@@ -143,8 +143,8 @@ class GenerateDataController extends AbstractController
         $device->setCreatedAt($faker->dateTime());
         $attributes = $this->craeteAttributes($device);
         foreach ($attributes as $attribute) {
-            dump($attribute);
             $attribute->setDevice($device);
+            dump($attribute);
             //$entityManager->persist($attribute);
         }
         return $device;
@@ -210,6 +210,7 @@ class GenerateDataController extends AbstractController
         $range->setMin($min);
         $range->setMax($max);
         $range->setUnit($unit);
+        
         /*sensor/actuator code (ranges are always an actuator)
             $actuator = new Actuator();
             //add fields (you may need to add $range in setAttribut)
