@@ -16,33 +16,44 @@ use Faker;
 
 class GenerateDataController extends AbstractController
 {
+    private $entityManager;
     /**
      * @Route("/generate/addHouse/{nbrHouses?1}", name="generate_data")
      */
     public function index($nbrHouses)
     {
-        
-        $entityManager = $this->getDoctrine()->getManager();
+        $this->entityManager = $this->getDoctrine()->getManager();
+        //dump($this->getUsers());
         for($a=0;$a<$nbrHouses;$a++){
             $smartHouse = $this->createSmartHouse($a);
             $rooms = $this->createRooms($smartHouse);
             foreach ($rooms as $room) {
                 $this->createDevices($room);
             }
-            dump($smartHouse);
         }
-        //$entityManager->persist($flush);
+        $this->entityManager->flush();
         return $this->render('generate_data/index.html.twig', [
             'controller_name' => 'GenerateDataController',
         ]);
     }
+
+   /*private function getUsers(){
+        $repo = $this->getDoctrine()->getRepository('App:User');
+        $result = $repo->findAll();
+        $users = [];
+        foreach ($result as $entry) {
+            if($entry->getLastName()!="admin")
+                array_push($users,$entry);
+        }
+        return $users;
+    }*/
 
     private function createSmartHouse($id){
         $faker =  Faker\Factory::create();
         $house = new SmartHouse();
         $house->setAddress($faker->address);
         $house->setName("House $id");
-        //$entityManager->persist($house);
+        $this->entityManager->persist($house);
         return $house;
     }
 
@@ -56,9 +67,8 @@ class GenerateDataController extends AbstractController
             $room = new Room();
             $room->setName($roomName);
             $room->setHouseID($house);
-            //$entityManager->persist($room);
-            dump($room);
             array_push($rooms,$room);
+            $this->entityManager->persist($room);
         }
         return $rooms;
     }
@@ -126,8 +136,7 @@ class GenerateDataController extends AbstractController
         foreach ($deviceNames as $deviceName) {
             $device = $this->createDevice($deviceName,$room);
             array_push($devices, $device);
-            dump($device);
-            //$entityManager->persist($device);
+            $this->entityManager->persist($device);
         }
         return $devices;
     }
@@ -144,8 +153,7 @@ class GenerateDataController extends AbstractController
         $attributes = $this->craeteAttributes($device);
         foreach ($attributes as $attribute) {
             $attribute->setDevice($device);
-            dump($attribute);
-            //$entityManager->persist($attribute);
+            $this->entityManager->persist($attribute);
         }
         return $device;
     }
@@ -154,62 +162,63 @@ class GenerateDataController extends AbstractController
         $atts = [];
         switch ($device->getName()) {
             case 'Heat Sensor':
-                array_push($atts,$this->newNumeric("Temperature","°C"));
+                array_push($atts,$this->newNumeric("Temperature","°C","sensor"));
                 break;
             case 'Exterior Blinds':
-                array_push($atts,$this->newRange("Open",0,100,"%"));
+                array_push($atts,$this->newRange("Open",0,100,"%","actuator"));
                 //array_push($atts,$this->newToggle("Orientation","Interior","Exterior"));
                 break;
             case 'Interior Blinds':
-                array_push($atts,$this->newRange("Open",0,100,"%"));
+                array_push($atts,$this->newRange("Open",0,100,"%","actuator"));
                 //array_push($atts,$this->newToggle("Orientation","Interior","Exterior"));
                 break;
             case 'Lamp':
-                array_push($atts,$this->newToggle("Switch","On","Off"));
+                array_push($atts,$this->newToggle("Switch","On","Off","actuator"));
                 break;
             case 'Oven':
-                array_push($atts,$this->newRange("Heat",0,350,"°C"));
-                array_push($atts,$this->newToggle("Timer Done","Triggered","Off"),);
+                array_push($atts,$this->newRange("Heat",0,350,"°C","actuator"));
+                array_push($atts,$this->newToggle("Timer Done","Triggered","Off","sensor"));
                 break;
             case 'Oven':
-                array_push($atts,$this->newRange("Heat",0,350,"°C"));
-                array_push($atts,$this->newToggle("Timer Done","Triggered","Off"),);
+                array_push($atts,$this->newRange("Heat",0,350,"°C","actuator"));
+                array_push($atts,$this->newToggle("Timer Done","Triggered","Off","sensor"));
                 break;
             case 'Smoke Detector':
-                array_push($atts,$this->newToggle("Alarm","Triggered","Off"),);
+                array_push($atts,$this->newToggle("Alarm","Triggered","Off","sensor"),);
                 break;
             case 'Mood Light':
-                array_push($atts,$this->newRange("intensity",0,100,"Si"));
-                array_push($atts,$this->newToggle("Switch","On","Off"));
+                array_push($atts,$this->newRange("intensity",0,100,"Si","actuator"));
+                array_push($atts,$this->newToggle("Switch","On","Off","actuator"));
                 break;
             case 'O2 Sensor':
-                array_push($atts,$this->newNumeric("O2 Level","%"));
+                array_push($atts,$this->newNumeric("O2 Level","%","sensor"));
                 break;
             case 'Air Conditioner':
-                array_push($atts,$this->newRange("Fan Speed",0,10,"Rpm"));
-                array_push($atts,$this->newRange("Temperature",0,100,"°C"));
-                array_push($atts,$this->newToggle("Swey","On","Off"));
+                array_push($atts,$this->newRange("Fan Speed",0,10,"Rpm","actuator"));
+                array_push($atts,$this->newRange("Temperature",0,100,"°C","actuator"));
+                array_push($atts,$this->newToggle("Swey","On","Off","actuator"));
                 break;
             case 'Bath':
-                array_push($atts,$this->newRange("Water Temperature",0,60,"°C"));
+                array_push($atts,$this->newRange("Water Temperature",0,60,"°C","actuator"));
                 break;
             case 'Motion Sensor':
-                array_push($atts,$this->newToggle("Alarm","Triggered","Off"));
+                array_push($atts,$this->newToggle("Alarm","Triggered","Off","sensor"));
                 break;
             case 'Garage Door':
-                array_push($atts,$this->newRange("Open",0,100,"%"));
+                array_push($atts,$this->newRange("Open",0,100,"%","actuator"));
                 break;
             default:break;
         }
         return $atts;
     }
 
-    private function newRange($name,$min,$max,$unit){
+    private function newRange($name,$min,$max,$unit,$type){
         $range = new Range();
         $range->setName($name);
         $range->setMin($min);
         $range->setMax($max);
         $range->setUnit($unit);
+        $range->setDeviceType($type);
         
         /*sensor/actuator code (ranges are always an actuator)
             $actuator = new Actuator();
@@ -219,10 +228,11 @@ class GenerateDataController extends AbstractController
         return $range;
     }
 
-    private function newNumeric($name,$unit){
+    private function newNumeric($name,$unit,$type){
         $numeric = new Numeric();
         $numeric->setName($name);
         $numeric->setUnit($unit);
+        $numeric->setDeviceType($type);
         //unit is missing
         /*sensor/actuator code (numerics are always a sensor)
             $sensor = new Sensor();
@@ -232,11 +242,12 @@ class GenerateDataController extends AbstractController
         return $numeric;
     }
     
-    private function newToggle($name,$onLable,$offLable){
+    private function newToggle($name,$onLable,$offLable,$type){
         $toggle = new Toggle();
         $toggle->setName($name);
         $toggle->setOnLabel($onLable);
         $toggle->setOffLable($offLable);
+        $toggle->setDeviceType($type);
         /*sensor/actuator code (toggles can be sensors (alarm) or actuator (on/off switch))
             //this one is tricky you either create a sensor or an actuator based on the name
             //in a switch($name)
