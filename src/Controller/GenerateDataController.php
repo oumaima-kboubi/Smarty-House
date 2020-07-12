@@ -240,11 +240,11 @@ class GenerateDataController extends AbstractController
                 break;
             case 'Exterior Blinds':
                 array_push($atts,$this->newRange("Open",0,100,"%","actuator"));
-                //array_push($atts,$this->newToggle("Orientation","Interior","Exterior"));
+                array_push($atts,$this->newToggle("Orientation","Interior","Exterior","actuator"));
                 break;
             case 'Interior Blinds':
                 array_push($atts,$this->newRange("Open",0,100,"%","actuator"));
-                //array_push($atts,$this->newToggle("Orientation","Interior","Exterior"));
+                array_push($atts,$this->newToggle("Orientation","Interior","Exterior","actuator"));
                 break;
             case 'Lamp':
                 array_push($atts,$this->newToggle("Switch","On","Off","actuator"));
