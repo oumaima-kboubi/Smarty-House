@@ -28,3 +28,6 @@ edit_personal:
 home_out:
   path: /homeOut
   controller: "src/Controller/RoutingController::acceuil"
+residentList:
+  path: /resident/show
+  controller: "src/Controller/ResidentController::getResident"

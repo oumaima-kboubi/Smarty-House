@@ -45,9 +45,11 @@
                                 <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                                     <li class="active"><a href="{{ path('home_in') }}"
                                                           class="nav-link">Home</a></li>
-                                    <li class="active"><a href="{% block hrefNav %}#{% endblock %}"
-                                                          class="nav-link">{% block hrefNavTitle %}Resident Space{% endblock %}</a>
+                                    {% if is_granted("ROLE_OWNER") or is_granted("ROLE_ADMIN") %}
+                                    <li class="active"><a href="{{ path('residentList') }}"
+                                                          class="nav-link">Resident Space</a>
                                     </li>
+                                    {% endif %}
                                     <li class="active"><a href="{{ path('services') }}" class="nav-link">Services</a>
                                     </li>
                                 </ul>
@@ -103,11 +105,20 @@
                     {#                    <div class="col-1"> </div>#}
                     <div class="col-1"></div>
                     <div class="col-1"></div>
-                    <div class="col-5 text-white">Logged in: {{ app.user.username }} </div>
+                    <div class="col-5 text-white">
+                        {% if  app.user.username  is defined %}
+
+                            Logged in: {{ app.user.username }}
+                    {% else %}  Logged in: New User
+                        {% endif %}
+                    </div>
                     <p style="text-align : center" class="col-1">
+                        {%  if app.user.path is defined  %}
                         <img src="{{ asset(app.user.path) }}" alt="{{ app.user.username }}" width="30px" height="30px"
-                             class="rounded-circle"> <br>
-                    </p>
+                             class="rounded-circle">
+
+                        <br>
+                    </p>   {% else %} {% endif %}
                 </div>
             </div>
         </nav>

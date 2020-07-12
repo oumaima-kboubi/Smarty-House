@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resident List{% endblock %}
+
+{% block body %}
+    {% if is_granted("ROLE_OWNER") or is_granted("ROLE_ADMIN") %}
+
+        <main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
+            <div class="container" style="padding-bottom: 40px ; padding-top: 70px">
+                <div class="card" style=" padding: 40px; border-radius: 10px;">
+                    <h1 class="text-center" style="color: rosybrown">Residents' List </h1>
+                    <h2 class="text-center text-info">House ID: {{ app.user.houseId }} </h2>
+                    {#    <div>#}
+                    {#        <a href="{{ path('resident.show')}}">#}
+                    {#            <i class="fa fa-user-plus fa-2x" aria-hidden="true"> show</i>#}
+                    {#        </a>#}
+                    {#    </div>#}
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Profile Pic</th>
+                            <th>Username</th>
+                            <th>Firstname</th>
+                            <th>lastname</th>
+                            <th>Cin</th>
+                            <th>Birthdate</th>
+                            <th>Gender</th>
+                            <th>Email</th>
+                            <th>Country</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for resident in residents %}
+                            <tr>
+                                <td>
+                                    <img
+                                            width="50px" height="50px" class="rounded-circle"
+                                            src="{{ asset(resident.path) }}" alt=""{{ resident.username }}>
+                                </td>
+                                <td>{{ resident.username }}</td>
+                                <td>{{ resident.firstname }}</td>
+                                <td>{{ resident.lastname }}</td>
+                                <td>{{ resident.cin }}</td>
+                                <td>{{ resident.Birthdate  | date('d/m/Y') }}</td>
+                                <td>{{ resident.gender }}</td>
+                                <td>{{ resident.email }}</td>
+                                <td>{{ resident.country }}</td>
+                                <td>
+                                    <a href="{{ path('resident.showOne', {'id': resident.id}) }}">
+                                        <i class="fa fa-trash" aria-hidden="true"> show</i>
+                                    </a>
+                                    {#                    <a href="{{ path('personne.edit', {'id': resident.id})}}">#}
+                                    {#                        <i class="fa fa-user-edit" aria-hidden="true"></i>#}
+                                    {#                    </a>#}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {#    {% if nbPage is defined %}#}
+                    {#        <nav aria-label="Page navigation example">#}
+                    {#            <ul class="pagination">#}
+                    {#                {% for p in 1..nbPage %}#}
+                    {#                    <li class="page-item"><a class="page-link" href="{{ path('resident.show', {'page': p}) }}">{{ p }}</a></li>#}
+                    {#                {% endfor %}#}
+                    {#            </ul>#}
+                    {#        </nav>#}
+
+                    {#        </div>#}
+                    {#    </div>#}
+                    {#</main>#}
+                    {#    {% endif %}#}
+                    <br>
+                    <a class="text-right text-info" href="{{ path('home_in') }}"><b>GO BACK HOME</b></a>
+                </div>
+            </div>
+        </main>
+    {% endif %}
+{% endblock %}
