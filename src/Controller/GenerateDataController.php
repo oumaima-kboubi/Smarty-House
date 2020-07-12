@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Attribut;
 use App\Entity\Device;
+use App\Entity\Metric;
 use App\Entity\Numeric;
 use App\Entity\Range;
 use App\Entity\Room;
@@ -18,9 +19,9 @@ class GenerateDataController extends AbstractController
 {
     private $entityManager;
     /**
-     * @Route("/generate/addHouse/{nbrHouses?1}", name="generate_data")
+     * @Route("/generate/addHouse/{nbrHouses?1}", name="generate_house")
      */
-    public function index($nbrHouses)
+    public function generateHouses($nbrHouses)
     {
         $this->entityManager = $this->getDoctrine()->getManager();
         //dump($this->getUsers());
@@ -33,8 +34,81 @@ class GenerateDataController extends AbstractController
         }
         $this->entityManager->flush();
         return $this->render('generate_data/index.html.twig', [
-            'controller_name' => 'GenerateDataController',
+            'controller_name' => 'Generated Houses',
         ]);
+    }
+
+    /**
+     * @Route("/generate/addMetrics/{depth?20}", name="generate_metric")
+     */
+    public function generateMetrics($depth)
+    {
+        $this->entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository("App:Attribut");
+        $attributes = $repository->findAll();
+        foreach ($attributes as $attribute) {
+            for ($i=0; $i < $depth; $i++) { 
+                $metric = $this->createMetric($attribute);
+                $this->entityManager->persist($metric);
+            }
+        }
+        $this->entityManager->flush();
+        return $this->render('generate_data/index.html.twig', [
+            'controller_name' => 'Generated Metrics',
+        ]);
+    }
+
+    private function createMetric($attribute){
+        if      (is_a($attribute,"App\Entity\Range")){
+            return($this->metricRange($attribute));
+        }elseif (is_a($attribute,"App\Entity\Toggle")) {
+            return($this->metricToggle($attribute));
+        }elseif (is_a($attribute,"App\Entity\Numeric")){
+            return($this->metricNumeric($attribute));
+        }
+    }
+
+    private function metricNumeric($numeric){
+        $faker =  Faker\Factory::create();
+        $metric = new Metric();
+        $metric->setAttribut($numeric);
+        $metric->setDeleted(false);
+        $metric->setTriggeredBy("generated");
+        $metric->setValue($faker->randomFloat(2,0,50));
+        if(rand(0,1)==0)//50% are generated in a very close date
+            $metric->setDate($faker->dateTimeBetween('-1 days','+2 days'));
+        else            //the rest are generated for a full year
+            $metric->setDate($faker->dateTimeBetween('-1 years'));
+        return $metric;
+    }
+
+    private function metricRange($range){
+        $faker =  Faker\Factory::create();
+        $metric = new Metric();
+        $metric->setAttribut($range);
+        $metric->setDeleted(false);
+        $metric->setTriggeredBy("generated");
+        $min = $range->getMin(); $max = $range->getMax();
+        $metric->setValue($faker->randomFloat(2,$min,$max));
+        if(rand(0,1)==0)//50% are generated in a very close date
+            $metric->setDate($faker->dateTimeBetween('-1 days','+2 days'));
+        else            //the rest are generated for a full year
+            $metric->setDate($faker->dateTimeBetween('-1 years'));
+        return $metric;
+    }
+
+    private function metricToggle($toggle){
+        $faker =  Faker\Factory::create();
+        $metric = new Metric();
+        $metric->setAttribut($toggle);
+        $metric->setDeleted(false);
+        $metric->setTriggeredBy("generated");
+        $metric->setValue($faker->boolean(20));
+        if($faker->boolean(60))//60% are generated at a recent date
+            $metric->setDate($faker->dateTimeBetween('-1 days','+2 days'));
+        else                   //the rest are generated for a full year
+            $metric->setDate($faker->dateTimeBetween('-1 years'));
+        return $metric;
     }
 
    /*private function getUsers(){
