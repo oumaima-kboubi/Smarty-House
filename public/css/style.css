@@ -314,7 +314,7 @@ h1, h2, h3, h4, h5,
   background-color: #c9ccd4; }
   @media (min-width: 768px) {
     .site-footer {
-      padding: 8em 0; } }
+      padding: 4em 0 !important; } }
   .site-footer .border-top {
     border-top: 1px solid rgba(255, 255, 255, 0.1) !important; }
   .site-footer p {
@@ -824,7 +824,7 @@ h1, h2, h3, h4, h5,
     color: #fff; }
 
 .site-section {
-  padding: 7rem 0; }
+  padding: 2rem 0; }
   @media (max-width: 991.98px) {
     .site-section {
       padding: 3rem 0; } }
