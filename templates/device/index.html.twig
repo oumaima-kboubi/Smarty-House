@@ -1,20 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DeviceController!{% endblock %}
-
+{% block title %}Device{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/Smarty-House/src/Controller/DeviceController.php'|file_link(0) }}">src/Controller/DeviceController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/Smarty-House/templates/device/index.html.twig'|file_link(0) }}">templates/device/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% if is_granted("ROLE_OWNER") or is_granted("ROLE_RESIDENT") or is_granted("ROLE_ADMIN") %}
+        <main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
+            <div class="container" style="padding-bottom: 40px ; padding-top: 100px">
+                <div class="card" style=" padding: 10px; border-radius: 10px;">
+                    {% for room in rooms %}
+                        <div class="room" style="box-shadow:inset 0 0 20px lightgray; border-radius:10px; padding:5px; margin:5px 0 5px 0">
+                            {{room.name}}
+                            {% for device in room.devices %}
+                                <div class="device" style="background-color: gray; border-radius:10px; padding:5px; margin:5px">
+                                    {{device.name}}
+                                    {% for attribute in device.relation %}
+                                        <div class="attribute">
+                                        <hr style="margin:0 5px 0 5px; clear:both">
+                                                <div class="attribute-lable">
+                                                    {{attribute.name}}
+                                                </div>
+                                                <div class="attribute-value" style="align:right">
+                                                    {% if attribute.type == "range" %}
+                                                        {{attribute.min}}
+                                                        <input type="range" min="{{attribute.min}}" max="{{attribute.max}}" value="{{attribute.getLatestValue}}" id="attributeActuat{{attribute.id}}">
+                                                        {{attribute.max}}                                                      
+                                                    {% elseif attribute.type == "toggle" %}
+                                                        {% if attribute.getLatestValue %}
+                                                            {{attribute.onLabel}}
+                                                            <input type="checkbox" checked {% if attribute.deviceType == "sensor" %}id="attributeSensor{{attribute.id}}" disabled {% else %}id="attributeActuat{{attribute.id}}" {% endif %}>
+                                                        {% else %}
+                                                            {{attribute.offLable}}
+                                                            <input type="checkbox" {% if attribute.deviceType == "sensor" %}id="attributeSensor{{attribute.id}}" disabled {% else %}id="attributeActuat{{attribute.id}}" {% endif %}>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <input type="text" readonly value="{{attribute.getLatestValue}}" id="attributeSensor{{attribute.id}}">
+                                                    {% endif %}
+                                                </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+    {% endif %}
+    {% block script %}
+        <script src={{ asset('js/device.js') }}></script>
+        <script src={{ asset('js/bootstrap.min.js') }}></script>
+    {% endblock %}
 {% endblock %}

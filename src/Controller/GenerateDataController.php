@@ -76,9 +76,9 @@ class GenerateDataController extends AbstractController
         $metric->setTriggeredBy("generated");
         $metric->setValue($faker->randomFloat(2,0,50));
         if(rand(0,1)==0)//50% are generated in a very close date
-            $metric->setDate($faker->dateTimeBetween('-1 days','+2 days'));
+            $metric->setDate($faker->dateTimeBetween('-1 days','-3 hours'));
         else            //the rest are generated for a full year
-            $metric->setDate($faker->dateTimeBetween('-1 years'));
+            $metric->setDate($faker->dateTimeBetween('-1 years','-3 hours'));
         return $metric;
     }
 
@@ -91,9 +91,9 @@ class GenerateDataController extends AbstractController
         $min = $range->getMin(); $max = $range->getMax();
         $metric->setValue($faker->randomFloat(2,$min,$max));
         if(rand(0,1)==0)//50% are generated in a very close date
-            $metric->setDate($faker->dateTimeBetween('-1 days','+2 days'));
+            $metric->setDate($faker->dateTimeBetween('-1 days','-3 hours'));
         else            //the rest are generated for a full year
-            $metric->setDate($faker->dateTimeBetween('-1 years'));
+            $metric->setDate($faker->dateTimeBetween('-1 years','-3 hours'));
         return $metric;
     }
 
@@ -105,9 +105,9 @@ class GenerateDataController extends AbstractController
         $metric->setTriggeredBy("generated");
         $metric->setValue($faker->boolean(20));
         if($faker->boolean(60))//60% are generated at a recent date
-            $metric->setDate($faker->dateTimeBetween('-1 days','+2 days'));
+            $metric->setDate($faker->dateTimeBetween('-1 days','-3 hours'));
         else                   //the rest are generated for a full year
-            $metric->setDate($faker->dateTimeBetween('-1 years'));
+            $metric->setDate($faker->dateTimeBetween('-1 years','-3 hours'));
         return $metric;
     }
 

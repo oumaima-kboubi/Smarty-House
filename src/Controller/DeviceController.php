@@ -14,13 +14,13 @@ class DeviceController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository('App:SmartHouse');
         $house = $repository->find($paramHouse);
-        if($paramRoom = 'all'){
-            $rooms = $house->getLocations();
+        if($paramRoom == 'all'){
+            $rooms = $house->getRooms();
         }else{
-            $rooms = $house->getLocation($paramRoom);
+            $rooms = $house->getRoom($paramRoom);
         }
         return $this->render('device/index.html.twig', [
-            'controller_name' => 'DeviceController',
+            'rooms' => $rooms
         ]);
     }
 }

@@ -88,6 +88,19 @@ class SmartHouse
         return $this->rooms;
     }
 
+    /**
+     * @return Collection|Room[]
+     */
+    public function getRoom($id): Collection
+    {
+        $localRooms = $this->rooms;
+        foreach ($localRooms as $room) {
+            if($room->getId() != $id)
+                $localRooms->removeElement($room);
+        }
+        return $localRooms;
+    }
+
     public function addRoom(Room $room): self
     {
         if (!$this->rooms->contains($room)) {

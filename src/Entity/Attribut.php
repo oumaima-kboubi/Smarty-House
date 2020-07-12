@@ -29,6 +29,7 @@ class Attribut
 
     /**
      * @ORM\OneToMany(targetEntity=Metric::class, mappedBy="attribut", orphanRemoval=true)
+     * @ORM\OrderBy({"date" = "DESC"})
      */
     protected $metrics;
 
@@ -77,6 +78,17 @@ class Attribut
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getType(){
+        $str = get_class($this);
+        $strArray = explode('\\',$str);
+        return strtolower($strArray[count($strArray)-1]);
+    }
+
+    public function getLatestValue(){
+        //$iterator = $this->metrics->getIterator();
+        return $this->metrics->first()->getValue();
     }
 
     public function getName(): ?string
