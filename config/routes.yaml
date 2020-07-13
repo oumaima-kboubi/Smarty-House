@@ -28,3 +28,9 @@ edit_personal:
 home_out:
   path: /homeOut
   controller: "src/Controller/RoutingController::acceuil"
+room_go:
+  path: /device/{roomId}
+  controller: "src/Controller/DeviceController::device"
+device_info:
+  path: /consult/{roomId}
+  controller: "src/Controller/HistoController::histo.consult"

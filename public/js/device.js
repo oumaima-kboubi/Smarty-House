@@ -22,6 +22,9 @@ socket.addEventListener("open", function() {
     });
     $('[id^=graphAttr]').each(function() {
         $(this).hide();
+        $(this).click(function() {
+            window.location.replace($(this).attr('data-path'));
+        });
     });
     $('[id^=buttonAttr]').click(function(){
         let id = $(this).attr('id').substr(10);

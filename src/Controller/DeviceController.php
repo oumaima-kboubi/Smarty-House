@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,11 +14,7 @@ class DeviceController extends AbstractController
      */
     public function Devices($paramRoom)
     {
-        /*$user = $this->getUser();
-        $repository = $this->getDoctrine()->getRepository(User::class);
-        $me = $repository->findOneBy(['username' => $user->getUsername()]);*/
-        $repository = $this->getDoctrine()->getRepository('App:SmartHouse');
-        /*$house = $repository->find($me->getHouseID());*/ $house = $repository->find(4); //<--- delete this and uncomment the rest
+        $house = $this->getHouse();
         if($paramRoom == 'all'){
             $rooms = $house->getRooms();
         }else{
@@ -33,20 +30,8 @@ class DeviceController extends AbstractController
      */
     public function Lighting()
     {
-        /*$user = $this->getUser();
-        $repository = $this->getDoctrine()->getRepository(User::class);
-        $me = $repository->findOneBy(['username' => $user->getUsername()]);*/
-        $repository = $this->getDoctrine()->getRepository('App:SmartHouse');
-        /*$house = $repository->find($me->getHouseID());*/ $house = $repository->find(4); //<--- delete this and uncomment the rest
-            $rooms = $house->getRooms();
-            foreach ($rooms as $room) {
-                foreach($room->getDevices() as $device){
-                    if($device->getType()!="lighting")
-                        $room->getDevices()->removeElement($device);
-                }
-                if($room->getDevices()->isEmpty())
-                    $rooms->removeElement($room);
-            }
+        $house = $this->getHouse();  
+        $rooms = $this->filterByType($house->getRooms(),"lighting");
         return $this->render('device/index.html.twig', [
             'rooms' => $rooms
         ]);
@@ -57,21 +42,10 @@ class DeviceController extends AbstractController
      */
     public function temperature()
     {
-        /*$user = $this->getUser();
-        $repository = $this->getDoctrine()->getRepository(User::class);
-        $me = $repository->findOneBy(['username' => $user->getUsername()]);*/
-        $repository = $this->getDoctrine()->getRepository('App:SmartHouse');
-        /*$house = $repository->find($me->getHouseID());*/ $house = $repository->find(4); //<--- delete this and uncomment the rest
-            $rooms = $house->getRooms();
-            foreach ($rooms as $room) {
-                foreach($room->getDevices() as $device){
-                    if($device->getType()!="temperature")
-                        $room->getDevices()->removeElement($device);
-                }
-                if($room->getDevices()->isEmpty())
-                    $rooms->removeElement($room);
-            }
-            
+
+        $house = $this->getHouse();
+        $rooms = $house->getRooms();
+        $rooms = $this->filterByType($house->getRooms(),"temperature");
         return $this->render('device/index.html.twig', [
             'rooms' => $rooms
         ]);
@@ -82,21 +56,9 @@ class DeviceController extends AbstractController
      */
     public function security()
     {
-        /*$user = $this->getUser();
-        $repository = $this->getDoctrine()->getRepository(User::class);
-        $me = $repository->findOneBy(['username' => $user->getUsername()]);*/
-        $repository = $this->getDoctrine()->getRepository('App:SmartHouse');
-        /*$house = $repository->find($me->getHouseID());*/ $house = $repository->find(4); //<--- delete this and uncomment the rest
-            $rooms = $house->getRooms();
-            foreach ($rooms as $room) {
-                foreach($room->getDevices() as $device){
-                    if($device->getType()!="security")
-                        $room->getDevices()->removeElement($device);
-                }
-                if($room->getDevices()->isEmpty())
-                    $rooms->removeElement($room);
-            }
-            
+        $house = $this->getHouse();
+        $rooms = $house->getRooms();
+        $rooms = $this->filterByType($house->getRooms(),"security");
         return $this->render('device/index.html.twig', [
             'rooms' => $rooms
         ]);
@@ -107,11 +69,11 @@ class DeviceController extends AbstractController
      */
     public function camera()
     {
-        /*$user = $this->getUser();
+        $user = $this->getUser();
         $repository = $this->getDoctrine()->getRepository(User::class);
-        $me = $repository->findOneBy(['username' => $user->getUsername()]);*/
+        $me = $repository->findOneBy(['username' => $user->getUsername()]);
         $repository = $this->getDoctrine()->getRepository('App:SmartHouse');
-        /*$house = $repository->find($me->getHouseID());*/ $house = $repository->find(4); //<--- delete this and uncomment the rest
+        $house = $repository->find($me->getHouseID());
         $cameras = $house->getCameras();
         return $this->render('device/camera.html.twig', [
             'cameras' => $cameras
@@ -134,5 +96,26 @@ class DeviceController extends AbstractController
         return $this->render('device/deviceControlAll.html.twig', [
             'rooms' => $rooms
         ]);
+    }
+
+    private function getHouse(){
+        $user = $this->getUser();
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $me = $repository->findOneBy(['username' => $user->getUsername()]);
+        $repository = $this->getDoctrine()->getRepository('App:SmartHouse');
+        $house = $repository->find($me->getHouseID());
+        return $house;
+    }
+
+    private function filterByType($rooms,$type){
+        foreach ($rooms as $room) {
+            foreach($room->getDevices() as $device){
+                if($device->getType()!=$type)
+                    $room->getDevices()->removeElement($device);
+            }
+            if($room->getDevices()->isEmpty())
+                $rooms->removeElement($room);
+        }
+        return $rooms;
     }
 }

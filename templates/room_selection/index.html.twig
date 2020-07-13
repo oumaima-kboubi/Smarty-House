@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rooms{% endblock %}
+{% block body %}
+    {% if is_granted("ROLE_OWNER") or is_granted("ROLE_RESIDENT") or is_granted("ROLE_ADMIN") %}
+        <main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
+            <div class="container" style="padding-bottom: 40px ; padding-top: 150px">
+                <div class="card" style=" padding: 10px; border-radius: 10px;">
+                    {% for room in rooms %}
+                    <div class="room" style="background-color: #343a40; border-radius:10px; padding:10px; margin:10px">        
+                            <a type="button" class="btn btn-secondary btn-lg btn-block" href="{{ path('room_go', { 'roomId': room.id }) }}"><h1 class="text-center text-info" style="color : rosybrown;">{{room.name}}</h1></a>
+                    </div>
+                    {% endfor %}
+                </div>
+                <a class="text-right text-info" href="{{ path('home_in') }}">GO BACK HOME</a>
+            </div>
+        </main>
+    {% endif %}
+{% endblock %}

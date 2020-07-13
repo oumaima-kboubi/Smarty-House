@@ -4,7 +4,7 @@
 {% block body %}
     {% if is_granted("ROLE_OWNER") or is_granted("ROLE_RESIDENT") or is_granted("ROLE_ADMIN") %}
         <main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
-            <div class="container" style="padding-bottom: 40px ; padding-top: 100px">
+            <div class="container" style="padding-bottom: 40px ; padding-top: 150px">
                 <div class="card" style=" padding: 10px; border-radius: 10px;">
                     {% for room in rooms %}
                         <div class="room" style="box-shadow:inset 0 0 20px lightgray; border-radius:10px; padding:5px; margin:5px 0 5px 0">
@@ -40,7 +40,7 @@
                                                     <div class="col-3">
                                                         <button id="buttonAttr{{attribute.id}}" class="btn btn-dark">show graph</button>
                                                     </div>
-                    <div id="graphAttr{{attribute.id}}" style="width:100%; height:160px; margin: 0 20px 8px 20px; border-radius:10px; background-color:white" data-visible="false" data-curveType={% if attribute.type == "toggle" %}"toggle"{% else %}"curve"{% endif %}></div>
+                    <div id="graphAttr{{attribute.id}}" style="width:100%; height:160px; margin: 0 20px 8px 20px; border-radius:10px; background-color:white" data-visible="false" data-curveType={% if attribute.type == "toggle" %}"toggle"{% else %}"curve"{% endif %} data-path="{{ path('home_in') }}"></div>
                                         </div>
                                     {% endfor %}
                                 </div>
@@ -48,6 +48,7 @@
                         </div>
                     {% endfor %}
                 </div>
+            <a class="text-right text-info" href="{{ path('home_in') }}">GO BACK HOME</a>
             </div>
         </main>
     {% endif %}

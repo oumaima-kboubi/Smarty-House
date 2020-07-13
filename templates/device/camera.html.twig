@@ -4,7 +4,7 @@
 {% block body %}
     {% if is_granted("ROLE_OWNER") or is_granted("ROLE_RESIDENT") or is_granted("ROLE_ADMIN") %}
         <main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
-            <div class="container" style="padding-bottom: 40px ; padding-top: 100px">
+            <div class="container" style="padding-bottom: 40px ; padding-top: 150px">
                 <div class="card" style=" padding: 10px; border-radius: 10px;">
                 <h1 class="text-center text-info" style="color : rosybrown;">Security Cameras</h1>
                 <hr style="margin:0px 5px 5px 5px;height: 2px;background:#17a2b8">
@@ -14,6 +14,7 @@
                         {% endfor %}
                     </div>
                 </div>
+                <a class="text-right text-info" href="{{ path('home_in') }}">GO BACK HOME</a>
             </div>
         </main>
     {% endif %}
