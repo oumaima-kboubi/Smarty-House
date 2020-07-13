@@ -31,6 +31,9 @@ home_out:
 residentList:
   path: /resident/show
   controller: "src/Controller/ResidentController::getResident"
-#aboutUs:
-#  path: /aboutUs
-#  controller: "src/Controller/RoutingController::aboutUs"
+aboutUsIn:
+  path: /homeUsIn
+  controller: "src/Controller/RoutingController::aboutUsIn"
+lobby:
+  path: /lobby
+  controller: "src/Controller/RoutingController::lobby"
