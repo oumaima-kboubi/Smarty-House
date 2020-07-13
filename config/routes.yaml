@@ -31,3 +31,6 @@ home_out:
 residentList:
   path: /resident/show
   controller: "src/Controller/ResidentController::getResident"
+#aboutUs:
+#  path: /aboutUs
+#  controller: "src/Controller/RoutingController::aboutUs"

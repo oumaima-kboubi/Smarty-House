@@ -65,14 +65,13 @@ class RoutingController extends AbstractController
      * @Route("/homeOut",name="routing.homeOut")
      */
     public function acceuil(){
-        return $this->render('acceuil.html.twig');
+        return $this->render('lobby.html.twig');
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/aboutUs" , name="aboutUs")
-     */
-public function residentList(){
-        return $this->render('acceuil.html.twig');
-}
+//    /**
+//     * @return \Symfony\Component\HttpFoundation\Response
+//     */
+//public function residentList(){
+//        return $this->render('resident/index.html.twig');
+//}
 }
