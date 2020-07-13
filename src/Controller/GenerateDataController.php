@@ -103,7 +103,10 @@ class GenerateDataController extends AbstractController
         $metric->setAttribut($toggle);
         $metric->setDeleted(false);
         $metric->setTriggeredBy("generated");
-        $metric->setValue($faker->boolean(20));
+        if($faker->boolean(20))
+            $metric->setValue(1);
+        else
+            $metric->setValue(0);
         if($faker->boolean(60))//60% are generated at a recent date
             $metric->setDate($faker->dateTimeBetween('-1 days','-3 hours'));
         else                   //the rest are generated for a full year

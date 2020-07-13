@@ -72,7 +72,11 @@ class Attribut
     {
         $this->metrics = new ArrayCollection();
         $this->presetID = new ArrayCollection();
-//        $this->device = new ArrayCollection();
+        //        $this->device = new ArrayCollection();
+    }
+
+    public function getLatestValue(){
+        return $this->metrics->first()->getValue();
     }
 
     public function getId(): ?int
@@ -84,11 +88,6 @@ class Attribut
         $str = get_class($this);
         $strArray = explode('\\',$str);
         return strtolower($strArray[count($strArray)-1]);
-    }
-
-    public function getLatestValue(){
-        //$iterator = $this->metrics->getIterator();
-        return $this->metrics->first()->getValue();
     }
 
     public function getName(): ?string

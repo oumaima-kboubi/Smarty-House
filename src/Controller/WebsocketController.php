@@ -34,4 +34,8 @@ class WebsocketController extends AbstractController
             return new JsonResponse(['isRequestTreaded' => "false"]);
         }
     }
+
+    /**
+     * 
+     */
 }
