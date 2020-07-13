@@ -79,6 +79,10 @@ security:
         - { path: ^/home, role: [ROLE_USER,ROLE_OWNER,ROLE_RESIDENT,ROLE_ADMIN] }
         - { path: ^/test, role: [ROLE_USER,ROLE_OWNER,ROLE_RESIDENT,ROLE_ADMIN] }
         - { path: ^/device, role: [ROLE_OWNER,ROLE_RESIDENT] }
+        - { path: ^/room, role: [ROLE_OWNER,ROLE_RESIDENT] }
+        - { path: ^/temperature, role: [ROLE_OWNER,ROLE_RESIDENT] }
+        - { path: ^/security, role: [ROLE_OWNER,ROLE_RESIDENT] }
+        - { path: ^/lighting, role: [ROLE_OWNER,ROLE_RESIDENT] }
         - { path: ^/editPersonal, role: [ROLE_OWNER,ROLE_RESIDENT] }
         - { path: ^/resident/show, role: [ROLE_OWNER,ROLE_ADMIN] }
         - { path: ^/resident/show, role: [ROLE_OWNER,ROLE_ADMIN] }

@@ -6,9 +6,14 @@
         <main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
             <div class="container" style="padding-bottom: 40px ; padding-top: 150px">
                 <div class="card" style=" padding: 10px; border-radius: 10px;">
+                <h1 class="text-center text-info" style="color : rosybrown;">Select a Room</h1>
+                <hr style="margin:0px 5px 5px 5px;height: 2px;background:#17a2b8">
+                    <div class="room" style="margin:25px">        
+                            <a type="button" class="btn btn-dark btn-lg btn-block" style=" padding: 20px 0 20px 0" href="{{ path('room_go', { 'roomId': 'all' }) }}"><h1 class="text-center text-info" style="color : rosybrown;">All Rooms</h1></a>
+                    </div>
                     {% for room in rooms %}
-                    <div class="room" style="background-color: #343a40; border-radius:10px; padding:10px; margin:10px">        
-                            <a type="button" class="btn btn-secondary btn-lg btn-block" href="{{ path('room_go', { 'roomId': room.id }) }}"><h1 class="text-center text-info" style="color : rosybrown;">{{room.name}}</h1></a>
+                    <div class="room" style="margin:25px">        
+                            <a type="button" class="btn btn-dark btn-lg btn-block" style=" padding: 20px 0 20px 0" href="{{ path('room_go', { 'roomId': room.id }) }}"><h1 class="text-center text-info" style="color : rosybrown;">{{room.name}}</h1></a>
                     </div>
                     {% endfor %}
                 </div>
