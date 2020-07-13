@@ -1,18 +1,19 @@
 {% trans_default_domain 'FOSUserBundle' %}
-
+{% extends 'base.html.twig' %}
 {% block body %}
 
     {% if is_granted("ROLE_OWNER") or is_granted("ROLE_RESIDENT") or is_granted("ROLE_ADMIN") %}
         <main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
-            <div class="container" style="padding-bottom: 40px">
+            <div class="container" style="padding: 75px">
 
                 <div class="card" style=" padding: 40px; border-radius: 10px">
                     <div class="fos_user_user_show">
                         <h1 class="logo text-info" style=" text-align: center ; font-size: 4em">Profile</h1> <br><br>
                         <p style="text-align : center">
-                        <img src="{{ asset(user.path) }}" alt="{{ user.username }}" width="200px" height="200px" class="rounded-circle"  > <br>
+                            <img src="{{ asset(resident.path) }}" alt="{{ resident.username }}" width="200px"
+                                 height="200px" class="rounded-circle"> <br>
                         </p>
-                            {% if app.request.hasPreviousSession %}
+                        {% if app.request.hasPreviousSession %}
                             {% for type, messages in app.session.flashbag.all() %}
                                 {% for message in messages %}
                                     <div class="flash-{{ type }} alert alert-success">
@@ -24,60 +25,56 @@
                         <br>
                         <div class="row">
                             <div class="col-5 text-info"><p><b>{{ 'profile.show.username'|trans }}:</b></p></div>
-                            <div class="col-7"><p>{{ user.username }}</p></div>
+                            <div class="col-7"><p>{{ resident.username }}</p></div>
                         </div>
                         <div class="row">
                             <div class="col-5 text-info"><p><b>Firstname:</b></p></div>
-                            <div class="col-7"><p>{{ user.firstname }}</p></div>
+                            <div class="col-7"><p>{{ resident.firstname }}</p></div>
                         </div>
                         <div class="row">
                             <div class="col-5 text-info"><p><b>Lastname:</b></p></div>
-                            <div class="col-7"><p>{{ user.lastname }}</p></div>
+                            <div class="col-7"><p>{{ resident.lastname }}</p></div>
                         </div>
                         <div class="row">
                             <div class="col-5 text-info"><p><b>Cin:</b></p></div>
-                            <div class="col-7"><p>{{ user.cin }}</p></div>
+                            <div class="col-7"><p>{{ resident.cin }}</p></div>
                         </div>
                         <div class="row">
                             <div class="col-5 text-info"><p><b>Birthdate:</b></p></div>
-                            <div class="col-7"><p>{{ user.birthdate | date('d/m/Y') }}</p></div>
+                            <div class="col-7"><p>{{ resident.birthdate | date('d/m/Y') }}</p></div>
                         </div>
                         <div class="row">
                             <div class="col-5 text-info"><p><b>Gender:</b></p></div>
-                            <div class="col-7"><p>{{ user.gender }}</p></div>
+                            <div class="col-7"><p>{{ resident.gender }}</p></div>
                         </div>
                         <div class="row">
                             <div class="col-5 text-info"><p><b>{{ 'profile.show.email'|trans }}:</b></p></div>
-                            <div class="col-7"><p>{{ user.email }}</p></div>
+                            <div class="col-7"><p>{{ resident.email }}</p></div>
                         </div>
                         <div class="row">
                             <div class="col-5 text-info"><p><b>Country:</b></p></div>
-                            <div class="col-7"><p>{{ user.country}}</p></div>
+                            <div class="col-7"><p>{{ resident.country }}</p></div>
                         </div>
                         <div class="row">
                             <div class="col-5 text-info"><p><b>House ID:</b></p></div>
-                            <div class="col-7"><p>{{ user.houseId }}</p></div>
+                            <div class="col-7"><p>{{ resident.houseId }}</p></div>
                         </div>
                     </div>
-<br>
                     <br>
-                    <div class="btn-group-toggle text-center">
-                        <button class="btn btn-dark rounded" type="button" style="width: -moz-fit-content"
-                                onclick=" location.href='{{ path('fos_user_profile_edit') }}';">Edit Login Credentials
-                        </button>
-                        <button class="btn btn-dark rounded" type="button"
-                                onclick=" location.href='{{ path('fos_user_change_password') }}';">Change Password
-                        </button>
-                        <button class="btn btn-dark rounded" type="button"
-                                onclick=" location.href='{{ path('edit_personal') }}';">Edit Personal Credentials
-                        </button>
-                        <button class="btn btn-danger rounded" type="button"
-                                onclick=" location.href='{{ path('resident.delete') }}';">Delete Account
-                        </button>
-                        {#                        <button class="btn btn-dark rounded" type="button"#}
-                        {#                                onclick=" location.href='{{ path('fos_user_change_password') }}';">CHANGE PASSWORD#}
-                        {#                        </button>#}
-                    </div>
+                    {#                    <div class="btn-group-toggle text-center">#}
+                    <button class="btn btn-dark rounded" type="button" style="width: -moz-fit-content"
+                            onclick=" location.href='{{ path('resident.show') }}';">Back to Residents' List
+                    </button>
+                    {#                        <button class="btn btn-dark rounded" type="button"#}
+                    {#                                onclick=" location.href='{{ path('fos_user_change_password') }}';">Change Password#}
+                    {#                        </button>#}
+                    {#                        <button class="btn btn-dark rounded" type="button"#}
+                    {#                                onclick=" location.href='{{ path('edit_personal') }}';">Edit Personal Credentials#}
+                    {#                        </button>#}
+                    {#                        #}{#                        <button class="btn btn-dark rounded" type="button"#}
+                    {#                        #}{#                                onclick=" location.href='{{ path('fos_user_change_password') }}';">CHANGE PASSWORD#}
+                    {#                        #}{#                        </button>#}
+                    {#                    </div>#}
                     <br>
                     <a class="text-right text-info" href="{{ path('home_in') }}"><b>GO BACK HOME</b></a>
                 </div>

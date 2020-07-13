@@ -31,28 +31,21 @@ security:
                 login_path: fos_user_security_login
                 check_path: fos_user_security_check
                 default_target_path: /test
-#                remember_me: true
+                require_previous_session: false
+            remember_me:
+                remember_me_parameter: _remember_me
+                lifetime: 604800 #1 semaine
+                secret: '%env(APP_SECRET)%'
+#            remember_me:
+#                key: '%env(APP_SECRET)%'
+#                lifetime: 20 #604800 #1 semaine
 #    failure_path:         null
 #                failure_forward:      false
 
-#        remember_me:
-#            secret:   %secret%           # ~ Required
-#            token_provider:       ~
-#            user_providers:       []
-#            catch_exceptions:     true
-#            name:                 REMEMBERME
-#            lifetime:             31536000
-#            path:                 /   fos_user_resetting_request
-#            domain:               null
-#            secure:               false # One of true; false; "auto"
-#            httponly:             true
-#            samesite:             null # One of null; "lax"; "strict"; "none"
-#            always_remember_me:   false
-#            remember_me_parameter: _remember_me
-
+#
             logout:
                 path: fos_user_security_logout
-                target: fos_user_security_login
+                target: lobby #fos_user_security_login
             anonymous:    true
             logout_on_user_change: true
             # activate different ways to authenticate
@@ -60,6 +53,20 @@ security:
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
+#    remember_me:
+#        secret:  '%env(APP_SECRET)%'           # ~ Required
+        #            token_provider:       ~
+        #            user_providers:       []
+        #            catch_exceptions:     true
+        #            name:                 REMEMBERME
+        #            lifetime:             20 #31536000
+        #            path:                 /   fos_user_resetting_request
+        #            domain:               null
+        #            secure:               false # One of true; false; "auto"
+        #            httponly:             true
+        #            samesite:             null # One of null; "lax"; "strict"; "none"
+        #            always_remember_me:   false
+        #            remember_me_parameter: _remember_me
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
@@ -67,11 +74,15 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/homeOut, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: ROLE_ADMIN }
         - { path: ^/home, role: [ROLE_USER,ROLE_OWNER,ROLE_RESIDENT,ROLE_ADMIN] }
         - { path: ^/test, role: [ROLE_USER,ROLE_OWNER,ROLE_RESIDENT,ROLE_ADMIN] }
         - { path: ^/device, role: [ROLE_OWNER,ROLE_RESIDENT] }
         - { path: ^/editPersonal, role: [ROLE_OWNER,ROLE_RESIDENT] }
+        - { path: ^/resident/show, role: [ROLE_OWNER,ROLE_ADMIN] }
+        - { path: ^/resident/show, role: [ROLE_OWNER,ROLE_ADMIN] }
+        - { path: ^/resident/showOne, role: [ROLE_OWNER,ROLE_ADMIN] }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
     encoders:
