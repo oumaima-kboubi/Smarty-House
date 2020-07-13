@@ -1,0 +1,26 @@
+{% extends 'Base.html.twig' %}
+
+    {% block title %}List of Devices{% endblock %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.css') }}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ asset('css/list.css') }}"
+    {% endblock %}
+    {% block body %}
+        {% for device in devices %}
+            <div class="card col-sm-4">
+                <div class="row no-gutters">
+                    <div class="col-sm-5" style="background: #868e96;">
+                        <img src="{{ device.path }}" class="card-img-top h-100" alt="...">
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>{{device.name}}</b></h5>
+                            <p class="card-text">{{device.description}}</p>
+                            <a href="{{ path('histo.consult', {'id' : device.id}) }}" class="btn btn-primary stretched-link">View History</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endblock %}
