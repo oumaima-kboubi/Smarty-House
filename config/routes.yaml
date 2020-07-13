@@ -58,3 +58,15 @@ security:
 camera:
   path: /camera
   controller: "src/Controller/DeviceController::devicecamera"
+history:
+  path: /histo
+  controller: "src/Controller/HistoController::histo"
+chart_news:
+  path: /chart/news
+  controller: "src/Controller/ChartController::chart.news"
+chart_graph:
+  path: /chart/graph/{$id}
+  controller: "src/Controller/ChartController::chart.graph"
+
+
+

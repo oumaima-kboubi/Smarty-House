@@ -19,6 +19,20 @@ class MetricRepository extends ServiceEntityRepository
         parent::__construct($registry, Metric::class);
     }
 
+    public function findToday($attrebuteId)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.attribut = :val')
+            ->orderBy('m.date', 'DESC')
+           // ->andWhere('m.date >= :date_today')
+            ->setParameter('val', $attrebuteId)
+           // ->setParameter('date_today', (new DateTime())->format('Y-m-d 00:00:00'))
+            ->getQuery()
+            ->setMaxResults(10)
+            ->getResult()
+        ;
+    }
+
     public function findForWeek($id, $today, $week)
     {
         $em = $this->getEntityManager();

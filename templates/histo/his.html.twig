@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="{{ asset('css/list.css') }}"
     {% endblock %}
     {% block body %}
-        <div class="row">
+        <div class="row" style="padding-top:150px">
         {% for device in devices %}
             <div class="card col-sm-4">
                 <div class="row no-gutters">
@@ -23,4 +23,5 @@
             </div>
         {% endfor %}
         </div>
+    
     {% endblock %}

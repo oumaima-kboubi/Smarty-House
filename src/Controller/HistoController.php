@@ -81,7 +81,8 @@ class HistoController extends AbstractController
      */
     public function camera()
     {
-        $camera = $this->getDoctrine()->getRepository(Camera::class)->findAll();
+        $house = $this->getHouse();
+        $camera = $house->getCameras();
         return $this->render('histo/camera.html.twig', array(
             'camera' => $camera
         ));
@@ -101,6 +102,29 @@ class HistoController extends AbstractController
             'actuators' => $actuator,
             'sensors' => $sensor
         ));
+    }
+
+
+    
+    private function getHouse(){
+        $user = $this->getUser();
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $me = $repository->findOneBy(['username' => $user->getUsername()]);
+        $repository = $this->getDoctrine()->getRepository('App:SmartHouse');
+        $house = $repository->find($me->getHouseID());
+        return $house;
+    }
+
+    private function filterByType($rooms,$type){
+        foreach ($rooms as $room) {
+            foreach($room->getDevices() as $device){
+                if($device->getType()!=$type)
+                    $room->getDevices()->removeElement($device);
+            }
+            if($room->getDevices()->isEmpty())
+                $rooms->removeElement($room);
+        }
+        return $rooms;
     }
 
 }

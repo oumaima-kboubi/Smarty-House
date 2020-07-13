@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block body %}
-        <div class="row">
+        <div class="row" style="padding-top:150px">
     {% for device in devices %}
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem;margin:15px">
             <img class="card-img-top" src="{{ device.path}}" alt="Device img">
             <div class="card-body">
                 <h5 class="card-title">{{ device.name }}</h5>
@@ -22,7 +22,7 @@
         </div>
     {% endfor %}
     {% for sensor in sensors %}
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem;margin:15px">
             <img class="card-img-top" src="{{ asset('images/consult/sensor001.jpg') }}" alt="Sensor image">
             <div class="card-body">
                 <h5 class="card-title">{{ sensor.apportEnergitique }} Sensor</h5>
@@ -39,7 +39,7 @@
         </div>
     {% endfor %}
     {% for actuator in actuators %}
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem;margin:15px">
             <img class="card-img-top" src="{{ asset('images/consult/actuator001.png') }}" alt="Actuator img">
             <div class="card-body">
                 <h5 class="card-title">{{ actuator.phenomenePhysiqueUtilise }}</h5>
