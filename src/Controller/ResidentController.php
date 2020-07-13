@@ -57,6 +57,7 @@ class ResidentController extends AbstractController
         ]);
     }
 
+
     /**
      * @param User|null $resident
      * @return \Symfony\Component\HttpFoundation\Response
