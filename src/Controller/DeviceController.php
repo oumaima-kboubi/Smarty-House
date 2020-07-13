@@ -103,6 +103,22 @@ class DeviceController extends AbstractController
     }
 
     /**
+     * @Route("/camera", name="devicecamera")
+     */
+    public function camera()
+    {
+        /*$user = $this->getUser();
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $me = $repository->findOneBy(['username' => $user->getUsername()]);*/
+        $repository = $this->getDoctrine()->getRepository('App:SmartHouse');
+        /*$house = $repository->find($me->getHouseID());*/ $house = $repository->find(4); //<--- delete this and uncomment the rest
+        $cameras = $house->getCameras();
+        return $this->render('device/camera.html.twig', [
+            'cameras' => $cameras
+        ]);
+    }
+
+    /**
      * @Route("/DeviceAll/{paramHouse?1}/{paramRoom?all}", name="deviceDebugAll")
      */
     public function GodMode($paramHouse,$paramRoom)

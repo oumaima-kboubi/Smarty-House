@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Device{% endblock %}
+{% block body %}
+    {% if is_granted("ROLE_OWNER") or is_granted("ROLE_RESIDENT") or is_granted("ROLE_ADMIN") %}
+        <main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
+            <div class="container" style="padding-bottom: 40px ; padding-top: 100px">
+                <div class="card" style=" padding: 10px; border-radius: 10px;">
+                <h1 class="text-center text-info" style="color : rosybrown;">Security Cameras</h1>
+                <hr style="margin:0px 5px 5px 5px;height: 2px;background:#17a2b8">
+                    <div class="cameraContainer" style="display: flex;flex-wrap: wrap;justify-content: center;">
+                        {% for camera in cameras %}
+                            <img src="{{camera.source}}" style="height: 320px;width:480;margin:10px; background-color:black">
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </main>
+    {% endif %}
+    {% block script %}
+        <script src="{{ asset('js/device.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/jscharting.js') }}"></script>
+    {% endblock %}
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Attribut;
+use App\Entity\Camera;
 use App\Entity\Device;
 use App\Entity\Metric;
 use App\Entity\Numeric;
@@ -19,7 +20,7 @@ class GenerateDataController extends AbstractController
 {
     private $entityManager;
     /**
-     * @Route("/generate/addHouse/{nbrHouses?1}", name="generate_house")
+     * @Route("/generate/addHouses/{nbrHouses?1}", name="generate_house")
      */
     public function generateHouses($nbrHouses)
     {
@@ -31,6 +32,7 @@ class GenerateDataController extends AbstractController
             foreach ($rooms as $room) {
                 $this->createDevices($room);
             }
+            $this->createCameras($smartHouse);
         }
         $this->entityManager->flush();
         return $this->render('generate_data/index.html.twig', [
@@ -246,6 +248,26 @@ class GenerateDataController extends AbstractController
             $this->entityManager->persist($attribute);
         }
         return $device;
+    }
+
+    private function createCameras($house){
+        $sources = ["http://12.119.11.106:86/mjpg/video.mjpg", "http://159.255.189.4:8081/mjpg/video.mjpg",
+        "http://185.73.102.190:80/mjpg/video.mjpg", "http://176.180.45.18:8080/cam_1.cgi","http://62.44.6.199:80/mjpg/video.mjpg"];
+        for ($i=0; $i < count($sources); $i++) { 
+            $camera = $this->createCamera($house,"CAM $i",$sources[$i]);
+            $this->entityManager->persist($camera);
+        }
+    }
+
+    private function createCamera($house,$name,$source){
+        $faker =  Faker\Factory::create();
+        $camera = new Camera();
+        $camera->setName($name);
+        $camera->setHouseID($house);
+        $camera->setCreatedAt($faker->dateTime());
+        $camera->setSource($source);
+        $camera->setDesription($faker->text(240));
+        return $camera;
     }
 
     private function craeteAttributes($device){
