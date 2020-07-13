@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Statistics</title>
+    <link rel="apple-touch-icon" href="{{ asset('theme-assets/images/ico/apple-icon-120.png')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('theme-assets/images/ico/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
+    <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme-assets/css/vendors.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme-assets/css/app-lite.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{  asset('theme-assets/css/core/menu/menu-types/vertical-menu.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('theme-assets/css/core/colors/palette-gradient.css')}}">
+    {% block stylesheets %}
+    {% endblock %}
+</head>
+
+<body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu" data-color="bg-chartbg" data-col="2-columns">
+<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-light">
+    <div class="navbar-wrapper">
+        <div class="navbar-container content">
+            <div class="collapse navbar-collapse show" id="navbar-mobile">
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="main-menu menu-fixed menu-light menu-accordion    menu-shadow " data-scroll-to-active="true" data-img="asset{{('images/consult/house.png')}}">
+    <div class="navbar-header">
+        <ul class="nav navbar-nav flex-row">
+            <li class="nav-item mr-auto"><a class="navbar-brand" href="{{ path('chart.news') }}"><img class="brand-logo" alt="Smart Home Logo" src="{{asset('images/consult/house.png')}}"/>
+                    <h3 class="brand-text">Die For</h3></a></li>
+            <li class="nav-item d-md-none"><a class="nav-link close-navbar"><i class="ft-x"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="main-menu menu-fixed menu-light menu-accordion    menu-shadow " data-scroll-to-active="true" data-img="{{asset('images/consult/house.png')}}">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="{{ path('chart.news') }}"><img class="brand-logo" alt="Smart Home logo" src="{{ asset('images/consult/house.png')}}"/>
+                        <h3 class="brand-text">Statistics</h3></a></li>
+                <li class="nav-item d-md-none"><a class="nav-link close-navbar"><i class="ft-x"></i></a></li>
+            </ul>
+        </div>
+        <div class="main-menu-content">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                {% block add %}
+                    <li class="active"><a href="{{path('chart.news')}}"><i class="ft-layers"></i><span class="menu-title" data-i18n="">News</span></a>
+                    </li>
+                    {% for device in devices %}
+                        <li class=" nav-item"><a href="{{ path('chart.graph', { 'id': device.id}) }}"><i class="{{ device.icon }}"></i><span class="menu-title" data-i18n="">{{device.name}}</span></a>
+                        </li>
+                    {% endfor %}
+                {% endblock %}
+            </ul>
+        </div><a class="btn btn-danger btn-block btn-glow btn-upgrade-pro mx-1" href="#" target="_blank"><i class="bi bi-arrow-left-circle-fill" ></i><span class="menu-title" data-i18n="">Go Back</span></a>
+        <div class="navigation-background"></div>
+    </div>
+</div>
+{% block body %}
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-wrapper-before"></div>
+            <div class="content-header row">
+                <div class="content-header-left col-md-4 col-12 mb-2">
+                    <h3 class="content-header-title">Our Latest News</h3>
+                </div>
+                <div class="content-header-right col-md-8 col-12">
+                    <div class="breadcrumbs-top float-md-right">
+                        <div class="breadcrumb-wrapper mr-1">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{path('chart.news')}}">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active">News
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <!-- Header footer section start -->
+                <section id="header-footer">
+                    <div class="row match-height">
+                        {% for new in news %}
+                            <div class="col-lg-4 col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ new.title }}</h4>
+                                        <h6 class="card-subtitle text-muted">Scroll Down</h6>
+                                    </div>
+                                    <img class="" src="{{ new.path }}" alt="Card image cap">
+                                    <div class="card-body">
+                                        <p class="card-text">{{ new.description }}</p>
+                                    </div>
+                                    <div class="card-footer border-top-blue-grey border-top-lighten-5 text-muted">
+                                        <span class="float-right">
+						<a href="{{ new.link }}" class="card-link"> Read More
+							<i class="la la-angle-right"></i>
+						</a>
+					</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!-- Header footer section End -->
+<!-- Beginning of the Footer -->
+<footer class="footer footer-static footer-light navbar-border navbar-shadow">
+    <div class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">2020  &copy; Copyright <a class="text-bold-800 grey darken-2" href="https://themeselection.com" target="_blank">Smart House</a></span>
+        <ul class="list-inline float-md-right d-block d-md-inline-blockd-none d-lg-block mb-0">
+            <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/" target="_blank"> More Info</a></li>
+            <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/support" target="_blank"> check here</a></li>
+            <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/products/chameleon-admin-modern-bootstrap-webapp-dashboard-html-template-ui-kit/" target="_blank"> Purchase</a></li>
+        </ul>
+    </div>
+</footer>
+<!------------------------------------------------------------->
+
+
+<!-- BEGIN JS-->
+<script src="{{asset('theme-assets/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('theme-assets/js/core/app-menu-lite.js')}}" type="text/javascript"></script>
+<script src="{{asset('theme-assets/js/core/app-lite.js')}}" type="text/javascript"></script>
+<script src="{{asset('theme-assets/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('theme-assets/vendors/js/charts/chart.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('theme-assets/js/core/app-menu-lite.js')}}" type="text/javascript"></script>
+<script src="{{asset('theme-assets/js/core/app-lite.js')}}" type="text/javascript"></script>
+{% block script %}
+{% endblock %}
+</body>
+</html>

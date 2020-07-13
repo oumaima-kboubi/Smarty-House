@@ -18,6 +18,17 @@ class SensorRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Sensor::class);
     }
+    public function findSensor($value)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery(
+            "SELECT r.name, c.apportEnergitique, c.seuilDeclenchement, c.typeDetection, c.typeSortie, c.createdAt
+    FROM App\Entity\Device d, App\Entity\Room r, App\Entity\Attribut a, App\Entity\Sensor c, App\Entity\SmartHouse s
+    WHERE (s.id= :value) and (s.id =r.houseID) and (r.id=d.roomID) and (d.id=a.device) and (a.actuator=c.id)")
+            ->setParameter('value', $value)
+            ->getResult()
+            ;
+    }
 
     // /**
     //  * @return Sensor[] Returns an array of Sensor objects

@@ -1,0 +1,202 @@
+{% extends 'chart/news.html.twig' %}
+
+{% block title %}Graph{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{asset('theme-assets/vendors/css/charts/chartist.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('theme-assets/css/pages/dashboard-ecommerce.css')}}">
+{% endblock %}
+
+
+{% block body %}
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-wrapper-before"></div>
+            <div class="content-header row">
+                <div class="content-header-left col-md-4 col-12 mb-2">
+                    <h3 class="content-header-title">Charts</h3>
+                </div>
+                <div class="content-header-right col-md-8 col-12">
+                    <div class="breadcrumbs-top float-md-right">
+                        <div class="breadcrumb-wrapper mr-1">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ path('chart.news') }}" >Home</a>
+                                </li>
+                                <li class="breadcrumb-item active">Charts
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-body"><!-- Bar charts section start -->
+                <section id="chartjs-bar-charts">
+                    <!-- Column Chart -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Let Me Check My Calendar</h4>
+                                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-content collapse show">
+                                    <div class="card-body">
+                                        <div class="height-400">
+                                            <canvas id="column-chart" data-entry-info="{{ stats|json_encode }}"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bar Chart -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">What Happened This Week ?</h4>
+                                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-content collapse show">
+                                    <div class="card-body">
+                                        <div class="height-400">
+                                            <canvas id="bar-chart" data-entry-info="{{ weeks|json_encode }}"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+                <!-- // Bar charts section end -->
+
+                <!-- line chart section start -->
+                <section id="chartjs-line-charts">
+                    <!-- Line Chart -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">All These Years</h4>
+                                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-content collapse show">
+                                    <div class="card-body chartjs">
+                                        <div class="height-500">
+                                            <canvas id="line-chart" data-entry-info="{{ stats|json_encode }}"  ></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+                <!-- // line chart section end -->
+
+                <!-- Pie charts section start -->
+                <section id="chartjs-pie-charts" >
+                    <div class="row">
+                        <!-- Simple Pie Chart -->
+                        <div class="col-md-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">I Wanna See My Day</h4>
+                                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-content collapse show">
+                                    <div class="card-body">
+                                        <div class="height-400">
+                                            <canvas id="simple-pie-chart" data-entry-info="{{ pies|json_encode }}" ></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Simple Doughnut Chart -->
+                        <div class="col-md-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Maybe My Month...?</h4>
+                                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-content collapse show">
+                                    <div class="card-body">
+                                        <div class="height-400">
+                                            <canvas id="simple-doughnut-chart"  data-entry-info="{{ doughs|json_encode }}"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- // Pie charts section end -->
+
+            </div>
+        </div>
+    </div>
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+{% endblock %}
+
+{% block script %}
+    <!-- BEGIN JS-->
+    <script src="{{asset('theme-assets/js/scripts/charts/chartjs/bar/column.js')}}" type="text/javascript"></script>
+    <script src="{{asset('theme-assets/js/scripts/charts/chartjs/bar/bar.js')}}" type="text/javascript"></script>
+    <script src="{{asset('theme-assets/js/scripts/charts/chartjs/line/line.js')}}" type="text/javascript"></script>
+    <script src="{{asset('theme-assets/js/scripts/charts/chartjs/pie-doughnut/pie-simple.js')}}" type="text/javascript"></script>
+    <script src="{{asset('theme-assets/js/scripts/charts/chartjs/pie-doughnut/doughnut-simple.js')}}" type="text/javascript"></script>
+    <!-- END PAGE LEVEL JS-->
+{% endblock %}
+
+{% block add %}
+    <li class=" nav-item"><a href="{{path('chart.news')}}"><i class="ft-layers"></i><span class="menu-title" data-i18n="">News</span></a>
+    </li>
+    {% for device in devices %}
+        <li {% if device.id==id %}class="active" {% else %} class=" nav-item" {% endif %}><a href="{{ path('chart.graph', { 'id': device.id}) }}"><i class="{{ device.icon }}"></i><span class="menu-title" data-i18n="">{{device.name}}</span></a>
+        </li>
+    {% endfor %}
+{% endblock %}

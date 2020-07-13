@@ -18,6 +18,15 @@ class NewsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, News::class);
     }
+    public function findByThree()
+    {
+        return $this->createQueryBuilder('n')
+            ->orderBy('n.id', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     // /**
     //  * @return News[] Returns an array of News objects

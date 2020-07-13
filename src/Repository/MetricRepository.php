@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Metric;
-use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,18 +19,101 @@ class MetricRepository extends ServiceEntityRepository
         parent::__construct($registry, Metric::class);
     }
 
-    public function findToday($attrebuteId)
+    public function findForWeek($id, $today, $week)
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.attribut = :val')
-            ->orderBy('m.date', 'DESC')
-           // ->andWhere('m.date >= :date_today')
-            ->setParameter('val', $attrebuteId)
-           // ->setParameter('date_today', (new DateTime())->format('Y-m-d 00:00:00'))
-            ->getQuery()
-            ->setMaxResults(10)
+        $em = $this->getEntityManager();
+        return $em->createQuery(
+            " select m.id, m.value, m.date, m.triggeredBy
+            from App\Entity\Metric m, App\Entity\Device d, App\Entity\Attribut a
+            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date > :week and m.date < :today and m.deleted = 0
+            order by m.date DESC")
+            ->setParameter('val', $id)
+            ->setParameter('week', $week)
+            ->setParameter('today', $today)
             ->getResult()
-        ;
+            ;
+    }
+
+    public function findForMonth($id, $week, $month)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery(
+            " select m.id, m.value, m.date, m.triggeredBy
+            from App\Entity\Metric m, App\Entity\Device d, App\Entity\Attribut a
+            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date > :month and m.date < :week and m.deleted = 0
+            order by m.date DESC")
+            ->setParameter('val', $id)
+            ->setParameter('week', $week)
+            ->setParameter('month', $month)
+            ->getResult()
+            ;
+    }
+
+    public function findTheRest($id, $month)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery(
+            " select m.id, m.value, m.date, m.triggeredBy
+            from App\Entity\Metric m, App\Entity\Device d, App\Entity\Attribut a
+            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date < :month and m.deleted = 0
+            order by m.date DESC")
+            ->setParameter('val', $id)
+            ->setParameter('month', $month)
+            ->getResult()
+            ;
+    }
+
+    public function findByDatou($id, $datou, $today)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery("
+            select m.date, m.value
+            from App\Entity\Metric m, App\Entity\Attribut a
+            Where m.attribut = a.id and a.device = :val and m.date >= :datou and m.date <= :today 
+            order by m.date DESC")
+            ->setParameter('val', $id)
+            ->setParameter('today', $today)
+            ->setParameter('datou', $datou)
+            ->getResult()
+            ;
+    }
+    public function findMy($id)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery("
+            select m.id, m.date, m.value, m.triggeredBy
+            from App\Entity\Metric m, App\Entity\Attribut a
+            Where (m.attribut = a.id)and (a.device = :val) and (m.deleted =0)
+            order by m.date DESC")
+            ->setParameter('val', $id)
+            ->getResult()
+            ;
+    }
+    public function findDevice($id, $value)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery(
+            " select DISTINCT(d.name) as name, COUNT(IDENTITY(m.attribut)) as value
+                from App\Entity\Metric m, App\Entity\Attribut a,  App\Entity\Device d, App\Entity\Room r, App\Entity\SmartHouse s
+                 where a.id = m.attribut and m.date >= :val and a.device=d.id and d.roomID=r.id and r.houseID=s.id and s.id=:id 
+                group By m.attribut"
+        )
+            ->setParameter('val', $value)
+            ->setParameter('id', $id)
+            ->getResult()
+            ;
+    }
+    public function findLine($value)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery(
+            "select m.date, m.value
+            from App\Entity\Metric m, App\Entity\Attribut a,  App\Entity\Device d
+            Where d.id = :val and a.device = d.id and a.id = m.attribut
+            order by m.date DESC")
+            ->setParameter('val', $value)
+            ->getResult()
+            ;
     }
 
     // /**
