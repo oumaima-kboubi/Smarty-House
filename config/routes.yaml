@@ -37,3 +37,24 @@ aboutUsIn:
 lobby:
   path: /lobby
   controller: "src/Controller/RoutingController::lobby"
+room_go:
+  path: /device/{roomId}
+  controller: "src/Controller/DeviceController::device"
+device_info:
+  path: /consult/{roomId}
+  controller: "src/Controller/HistoController::histo.consult"
+rooms:
+  path: /rooms
+  controller: "src/Controller/RoomSelectionController::room_selection"
+temperature:
+  path: /temperature
+  controller: "src/Controller/DeviceController::devicetemp"
+lighting:
+  path: /lighting
+  controller: "src/Controller/DeviceController::devicelight"
+security:
+  path: /security
+  controller: "src/Controller/DeviceController::devicesecure"
+camera:
+  path: /camera
+  controller: "src/Controller/DeviceController::devicecamera"
