@@ -92,6 +92,7 @@
                             .</p>
                     </div>
                 </div> {# kitchen#}
+
                 <div class="col-md-6 mb-4 col-lg-4" data-aos="fade-up" data-aos-delay="">
                     <div class="service-29193 text-center">
               <span class="img-wrap mb-5">
@@ -103,7 +104,7 @@
                     </div>
                 </div>{#residents#}
 
-
+                {% if is_granted("ROLE_OWNER") or is_granted("ROLE_ADMIN") %}
                 <div class="col-md-6 mb-4 col-lg-4" data-aos="fade-up" data-aos-delay="">
 
                 </div>{#residents#}
@@ -112,11 +113,13 @@
               <span class="img-wrap mb-5">
                 <img src={{ asset('fonts/flaticon/svg/smartHome.svg') }} alt="Image" class="img-fluid">
               </span>
-                        <h3 class="mb-4"><a href="#">Residents Check</a></h3>
+                        <h3 class="mb-4"><a href="{{ path('resident.show') }}">Residents Check</a></h3>
                         <p>Check and edit the resident's list
                             .</p>
+                        <br>
                     </div>
                 </div>{#residents#}
+                {% endif %}
                 <div class="col-md-6 mb-4 col-lg-4" data-aos="fade-up" data-aos-delay="">
 
                 {#            <div class="col-md-6 mb-4 col-lg-4" data-aos="fade-up" data-aos-delay="">#}

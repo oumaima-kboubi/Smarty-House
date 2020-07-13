@@ -22,3 +22,15 @@ home_in:
 services:
   path: /services
   controller: "src/Controller/RoutingController::services"
+edit_personal:
+  path: /editPersonal
+  controller: "src/Controller/FirstController::editPersonal"
+home_out:
+  path: /homeOut
+  controller: "src/Controller/RoutingController::acceuil"
+residentList:
+  path: /resident/show
+  controller: "src/Controller/ResidentController::getResident"
+#aboutUs:
+#  path: /aboutUs
+#  controller: "src/Controller/RoutingController::aboutUs"

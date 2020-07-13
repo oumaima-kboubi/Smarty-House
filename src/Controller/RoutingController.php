@@ -48,9 +48,30 @@ class RoutingController extends AbstractController
     }
     /**
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/homeIn",name="routing.homeIn")
+     */
+    public function homeIn(){
+        return $this->render('home.html.twig');
+    }
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/services",name="routing.services")
      */
     public function services(){
-        return $this->render('sevices.html.twig');
+        return $this->render('services.html.twig');
     }
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/homeOut",name="routing.homeOut")
+     */
+    public function acceuil(){
+        return $this->render('aboutUs.html.twig');
+    }
+
+//    /**
+//     * @return \Symfony\Component\HttpFoundation\Response
+//     */
+//public function residentList(){
+//        return $this->render('resident/index.html.twig');
+//}
 }

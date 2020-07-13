@@ -1,51 +1,61 @@
 {% block movingPics %}
-<div class="site-section">
-    <div class="container">
-        <div class="row mb-5 align-items-center">
-            <div class="col-md-7">
-                <h2 class="heading-39291 mb-0">Our Projects</h2>
-            </div>
-            <div class="col-md-5 text-right">
-                <p class="mb-0"><a href="#" class="more-39291">View All Projects</a></p>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="media-02819">
-                    <a href="#" class="img-link small"><img src={{ asset('images/img_1.jpg') }} alt="Image"
-                                                            class="img-fluid"></a>
-                    <h3><a href="#">Downside Up House</a></h3>
-                    <span>Melbourne, Australia</span>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="media-02819">
-                    <a href="#" class="img-link"><img src={{ asset('images/img_2.jpg') }} alt="Image"
-                                                      class="img-fluid"></a>
-                    <h3><a href="#">Downside Up House</a></h3>
-                    <span>Melbourne, Australia</span>
+    <div class="site-section">
+        <div class="container">
+            <div class="row mb-5 align-items-center">
+                <div class="col-md-7">
+                    <h2 class="heading-39291 mb-0">Our Services and Features</h2>
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                <div class="media-02819">
-                    <a href="#" class="img-link"><img src={{ asset('images/img_3.jpg') }} alt="Image"
-                                                      class="img-fluid"></a>
-                    <h3><a href="#">Downside Up House</a></h3>
-                    <span>Melbourne, Australia</span>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="media-02819">
+                        <a class="img-link small"><img src={{ asset('images/img_1.jpg') }} alt="Image"
+                                                       class="img-fluid"></a>
+                        <h3><a>Nature Lover</a></h3>
+                        <span>We consider that nature is an important part of a healthy life. <br>
+                            So we provide a safe green space in every home. </span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="media-02819">
-                    <a href="#" class="img-link small"><img src={{ asset('images/img_4.jpg') }} alt="Image"
-                                                            class="img-fluid"></a>
-                    <h3><a href="#">Downside Up House</a></h3>
-                    <span>Melbourne, Australia</span>
+                <div class="col-lg-6">
+                    <div class="media-02819">
+                        <a class="img-link"><img src={{ asset('images/img_2.jpg') }} alt="Image"
+                                                 class="img-fluid"></a>
+                        <h3><a>Super Smart Kitchen</a></h3>
+                        <span>Kitchen is a special place that needs an extra care. No worries any more!<br>
+                            We handled every tiny detail for you. Now all you have to is ENJOY every moment.</span>
+                    </div>
                 </div>
-            </div>
 
+                <div class="col-lg-6">
+                    <div class="media-02819">
+                        <a class="img-link"><img src={{ asset('images/img_3.jpg') }} alt="Image"
+                                                 class="img-fluid"></a>
+                        <h3><a>Living Room, where the magic happens</a></h3>
+                        <span>Living Room is where all the family gets reunited. The atmosphere depends on the mood right?
+                        That's why we provide you all means to transform your living room into a new different world each day</span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="media-02819">
+                        <a class="img-link small"><img src={{ asset('images/img_4.jpg') }} alt="Image"
+                                                       class="img-fluid"></a>
+                        <h3><a>The perfect mix</a></h3>
+                        <span>We strongly believe that the ultimate perfect mix is a good technology quality with a touch of beauty
+                        Smarty Houses are distinguished by their uniq fancy design. So what are you waiting for? Register and join our big family.
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row mb-5 align-items-center">
+                <div class="col-md-7">
+                </div>
+                <div class="col-md-5 text-right">
+                    <p class="mb-0"><a href="{{ path('fos_user_registration_register') }}">Register Now!</a></p>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

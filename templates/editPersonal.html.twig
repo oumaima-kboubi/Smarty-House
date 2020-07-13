@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block title %} Edit Profile {% endblock %}
+{% block body %}
+  {% if is_granted("ROLE_OWNER") or is_granted("ROLE_RESIDENT") or is_granted("ROLE_ADMIN") %}
+
+    <main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
+        <div class="container" style="padding-bottom: 40px ; padding-top: 65px">
+            <div class="card" style=" padding: 40px; border-radius: 10px;">
+                {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                {{ form_start(form) }}
+{#                {{ form_start(form, { 'action': path('edit_personal'), 'attr': { 'class': 'edit_personal' } }) }}#}
+    <h1 class="logo text-info" style=" text-align: center">Edit Personal Credentials</h1>
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="flash-{{ type }} alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    <div>
+        {{ form_errors(form) }}
+    </div>
+
+{{ form_widget(form) }}
+    <div class="btn-group-toggle text-center">
+        <input type="submit" class=" btn btn-info rounded " style="align-items: center"
+               value="Edit"/>
+        <button class="btn btn-dark rounded" type="button"
+                onclick=" location.href='{{ path('fos_user_profile_show') }}';">Cancel
+        </button>
+    </div>
+    {{ form_end(form) }}
+            </div>
+        </div>
+    </main>
+    {% endif %}
+{% endblock %}

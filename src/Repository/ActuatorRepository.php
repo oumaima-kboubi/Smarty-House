@@ -18,6 +18,17 @@ class ActuatorRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Actuator::class);
     }
+    public function findActuator($value)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery(
+            "SELECT r.name, c.phenomenePhysiqueUtilise, c.principeMisEnOeuvre, c.createdAt, c.typeEnergieUtilisee
+    FROM App\Entity\Device d, App\Entity\Room r, App\Entity\Attribut a, App\Entity\Actuator c, App\Entity\SmartHouse s
+    WHERE (s.id= :value) and (s.id =r.houseID) and (r.id=d.roomID) and (d.id=a.device) and (a.actuator=c.id)")
+            ->setParameter('value', $value)
+            ->getResult()
+            ;
+    }
 
     // /**
     //  * @return Actuator[] Returns an array of Actuator objects

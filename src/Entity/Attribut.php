@@ -47,10 +47,31 @@ class Attribut
      */
     private $sensor;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Device::class, inversedBy="relation")
+     */
+    private $device;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $deviceType;
+//
+//    /**
+//     * @ORM\OneToMany(targetEntity=Device::class, mappedBy="attributs")
+//     */
+//    private $device;
+
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $type;
+
     public function __construct()
     {
         $this->metrics = new ArrayCollection();
         $this->presetID = new ArrayCollection();
+//        $this->device = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -155,4 +176,71 @@ class Attribut
 
         return $this;
     }
+//
+//    /**
+//     * @return Collection|Device[]
+//     */
+//    public function getDevice(): Collection
+//    {
+//        return $this->device;
+//    }
+//
+//    public function addDevice(Device $device): self
+//    {
+//        if (!$this->device->contains($device)) {
+//            $this->device[] = $device;
+//            $device->setAttributs($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeDevice(Device $device): self
+//    {
+//        if ($this->device->contains($device)) {
+//            $this->device->removeElement($device);
+//            // set the owning side to null (unless already changed)
+//            if ($device->getAttributs() === $this) {
+//                $device->setAttributs(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
+
+//    public function getType(): ?string
+//    {
+//        return $this->type;
+//    }
+//
+//    public function setType(string $type): self
+//    {
+//        $this->type = $type;
+//
+//        return $this;
+//    }
+
+
+public function getDevice(): ?Device
+{
+    return $this->device;
 }
+
+public function setDevice(?Device $device): self
+{
+    $this->device = $device;
+
+    return $this;
+}
+
+public function getDeviceType(): ?string
+{
+    return $this->deviceType;
+}
+
+public function setDeviceType(string $deviceType): self
+{
+    $this->deviceType = $deviceType;
+
+    return $this;
+}}

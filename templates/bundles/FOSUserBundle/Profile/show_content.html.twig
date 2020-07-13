@@ -8,9 +8,11 @@
 
                 <div class="card" style=" padding: 40px; border-radius: 10px">
                     <div class="fos_user_user_show">
-                        <h1 class="logo" style="color : #138496 ; text-align: center">Profile</h1> <br><br>
-                        <img alt="{{ user.username }}" src="{{ user.path }}" class="rounded-circle text-center"> <br>
-                        {% if app.request.hasPreviousSession %}
+                        <h1 class="logo text-info" style=" text-align: center ; font-size: 4em">Profile</h1> <br><br>
+                        <p style="text-align : center">
+                        <img src="{{ asset(user.path) }}" alt="{{ user.username }}" width="200px" height="200px" class="rounded-circle"  > <br>
+                        </p>
+                            {% if app.request.hasPreviousSession %}
                             {% for type, messages in app.session.flashbag.all() %}
                                 {% for message in messages %}
                                     <div class="flash-{{ type }} alert alert-success">
@@ -48,8 +50,17 @@
                             <div class="col-5 text-info"><p><b>{{ 'profile.show.email'|trans }}:</b></p></div>
                             <div class="col-7"><p>{{ user.email }}</p></div>
                         </div>
+                        <div class="row">
+                            <div class="col-5 text-info"><p><b>Country:</b></p></div>
+                            <div class="col-7"><p>{{ user.country}}</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 text-info"><p><b>House ID:</b></p></div>
+                            <div class="col-7"><p>{{ user.houseId }}</p></div>
+                        </div>
                     </div>
-
+<br>
+                    <br>
                     <div class="btn-group-toggle text-center">
                         <button class="btn btn-dark rounded" type="button" style="width: -moz-fit-content"
                                 onclick=" location.href='{{ path('fos_user_profile_edit') }}';">Edit Login Credentials
@@ -58,13 +69,17 @@
                                 onclick=" location.href='{{ path('fos_user_change_password') }}';">Change Password
                         </button>
                         <button class="btn btn-dark rounded" type="button"
-                                onclick=" location.href='{{ path('fos_user_change_password') }}';">Edit Personal Credentials
+                                onclick=" location.href='{{ path('edit_personal') }}';">Edit Personal Credentials
+                        </button>
+                        <button class="btn btn-danger rounded" type="button"
+                                onclick=" location.href='{{ path('resident.delete') }}';">Delete Account
                         </button>
                         {#                        <button class="btn btn-dark rounded" type="button"#}
                         {#                                onclick=" location.href='{{ path('fos_user_change_password') }}';">CHANGE PASSWORD#}
                         {#                        </button>#}
                     </div>
-
+                    <br>
+                    <a class="text-right text-info" href="{{ path('home_in') }}"><b>GO BACK HOME</b></a>
                 </div>
             </div>
         </main>

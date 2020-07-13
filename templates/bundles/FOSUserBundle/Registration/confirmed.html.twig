@@ -3,8 +3,18 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-    {% if targetUrl %}
-    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
-    {% endif %}
+
+    <main class="d-flex align-items-center min-vh-70 py-3 py-md-0">
+        <div class="container" style="padding-bottom: 40px ; padding-top: 50px">
+            <div class="card" style=" padding: 40px; border-radius: 10px;">
+                <p class="alert alert-info">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+                {% if targetUrl %}
+                    <p ><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+                {% endif %}
+                <br>
+                <a class="text-right text-info" href="{{ path('home_in') }}">GO HOME AND ENJOY THE EXPERIENCE WITH SMARTY HOUSE</a>
+            </div>
+        </div>
+    </main>
+
 {% endblock fos_user_content %}

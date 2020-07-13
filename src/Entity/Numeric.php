@@ -18,8 +18,25 @@ class Numeric extends Attribut
      */
     protected $id;
 
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $unit;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(string $unit): self
+    {
+        $this->unit = $unit;
+
+        return $this;
     }
 }

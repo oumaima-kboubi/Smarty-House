@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('css/cam.css') }}">
+{% endblock %}
+
+{% block body %}
+  <div class="row">
+  {% for cam in camera %}
+    <div class="card" style="width: 20rem;">
+      <img class="card-img-top" src="{{ asset('images/consult/photogcamera.jpg') }}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ cam.name }}</h5>
+        <p class="card-text">{{ cam.desription }}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Installed In : {{ cam.createdAt | date("d/m/Y") }}</li>
+      </ul>
+      <div class="card-body">
+        <a href="{{ cam.source }}" class="card-link">See Live From Here</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

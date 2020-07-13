@@ -30,13 +30,17 @@
                         <p class="login-card-description" style="font-size: x-large">Sign into your account</p>
 
                         {% block body %} {% endblock %}
-                        <a href="{{ path('fos_user_change_password') }}" class="forgot-password-link">Forgot password?</a>
+                        <br>
+                        {#                        <a href="{{ path('fos_user_change_password') }}" class="forgot-password-link">Forgot password?</a>#}
                         <p class="login-card-footer-text">Don't have an account? <a
                                     href="{{ path('fos_user_registration_register') }}"
                                     class="text-reset">{{ 'layout.register'|trans({}, 'FOSUserBundle') }} here</a></p>
                         <nav class="login-card-footer-nav">
-                            <a href="{{path('terms_of_use_out')}}">Terms of use.</a>
-                            <a href="{{path('privacy_policy_out')}}">Privacy policy</a>
+                            <a href="{{ path('terms_of_use_out') }}">Terms of use.</a>
+                            <a href="{{ path('privacy_policy_out') }}">Privacy policy</a>
+
+                            <br>
+                            <a class="text-right text-info" href="{{ path('home_out') }}">GO BACK HOME</a>
                         </nav>
                     </div>
                 </div>

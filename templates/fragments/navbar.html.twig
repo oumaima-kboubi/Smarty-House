@@ -20,33 +20,36 @@
                                 <nav class="site-navigation text-right ml-auto " role="navigation">
                                     <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                                         <li class="active"><a href="#"
-                                                              class="nav-link">Home</a></li>
-                                        <li><a href="{% block hrefNav %}#{% endblock %}"
-                                               class="nav-link">{% block hrefNavTitle %}Resident Space{% endblock %}</a>
+                                                              class="nav-link">Lobby</a></li>
+                                        <li class="active"><a href="{{ path('fos_user_registration_register') }}"
+                                                              class="nav-link">Register</a>
                                         </li>
-                                        <li><a href="services.html" class="nav-link">Services</a></li>
+                                        <li class="active"><a href="{{ path('fos_user_security_login') }}"
+                                                              class="nav-link">Log In</a></li>
                                     </ul>
                                 </nav>
                             </div>
-                            <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"
-                                                                                           class="site-menu-toggle py-5 js-menu-toggle text-white"><span
-                                            class="icon-menu h3 text-primary"></span></a></div>
-                            <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"
-                                                                                           class="site-menu-toggle py-5 js-menu-toggle text-white"><span
-                                            class="icon-menu h3 text-primary"></span></a></div>
-                            <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"
-                                                                                           class="site-menu-toggle py-5 js-menu-toggle text-white"><span
-                                            class="icon-menu h3 text-primary"></span></a></div>
-                            <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"
-                                                                                           class="site-menu-toggle py-5 js-menu-toggle text-white"><span
-                                            class="icon-menu h3 text-primary"></span></a></div>
+                            {#                            <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"#}
+                            {#                                                                                           class="site-menu-toggle py-5 js-menu-toggle text-white"><span#}
+                            {#                                            class="icon-menu h3 text-primary"></span></a></div>#}
+                            {#                            <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"#}
+                            {#                                                                                           class="site-menu-toggle py-5 js-menu-toggle text-white"><span#}
+                            {#                                            class="icon-menu h3 text-primary"></span></a></div>#}
+                            {#                            <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"#}
+                            {#                                                                                           class="site-menu-toggle py-5 js-menu-toggle text-white"><span#}
+                            {#                                            class="icon-menu h3 text-primary"></span></a></div>#}
+                            {#                            <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"#}
+                            {#                                                                                           class="site-menu-toggle py-5 js-menu-toggle text-white"><span#}
+                            {#                                            class="icon-menu h3 text-primary"></span></a></div>#}
 
                             <div class="col-lg-6">
                                 <nav class="site-navigation text-left mr-auto " role="navigation">
                                     <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                                        <li><a href="about.html" class="nav-link ">About</a></li>
-                                        <li><a href="blog.html" class="nav-link">Blog</a></li>
-                                        <li><a href="contact.html" class="nav-link">Contact</a></li>
+                                        <li class="active"><a href="{{ path('home_out') }}"
+                                                              class="nav-link ">About</a></li>
+                                        {#                                        <li class="active"><a href="blog.html" class="nav-link">Blog</a></li>#}
+                                        <li class="active"><a href="mailto: smartyhousenoreply@gmail.com"
+                                                              class="nav-link">Contact</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -70,6 +73,7 @@
                     <div class="site-logo">
                         <em style="color: rosybrown !important;">Smarty House</em>
                     </div>
+                </div>
             </nav>
         </div>
 

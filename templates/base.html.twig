@@ -9,7 +9,8 @@
     <link href="{{ asset('/node_modules/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
     <link rel="stylesheet" href={{ asset('css/aos.css') }}>
     <link rel="stylesheet" href={{ asset('fonts/flaticon/font/flaticon.css') }}>
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans:300,400,700&display=swap" rel="stylesheet"> {# for the font#}
+    <link href="https://fonts.googleapis.com/css?family=DM+Sans:300,400,700&display=swap"
+          rel="stylesheet"> {# for the font#}
 
     <link rel="stylesheet" href={{ asset('css/bootstrap.min.css') }}> {#for navbar#}
     <!-- carousel -->
@@ -42,34 +43,40 @@
                         <div class="col-lg-6">
                             <nav class="site-navigation text-right ml-auto " role="navigation">
                                 <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                                    <li class="active"><a href="{{path('home_in')}}"
+                                    <li class="active"><a href="{{ path('home_in') }}"
                                                           class="nav-link">Home</a></li>
-                                    <li class="active"><a href="{% block hrefNav %}#{% endblock %}"
-                                           class="nav-link">{% block hrefNavTitle %}Resident Space{% endblock %}</a>
+                                    {% if is_granted("ROLE_OWNER") or is_granted("ROLE_ADMIN") %}
+                                        <li class="active"><a href="{{ path('residentList') }}"
+                                                              class="nav-link">Resident Space</a>
+                                        </li>
+                                    {% endif %}
+                                    <li class="active"><a href="{{ path('services') }}" class="nav-link">Services</a>
                                     </li>
-                                    <li class="active"><a href="{{ path('services') }}" class="nav-link">Services</a></li>
                                 </ul>
                             </nav>
                         </div>
-                        <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"
-                                                                                       class="site-menu-toggle py-5 js-menu-toggle text-white"><span
-                                        class="icon-menu h3 text-primary"></span></a></div>
-                        <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"
-                                                                                       class="site-menu-toggle py-5 js-menu-toggle text-white"><span
-                                        class="icon-menu h3 text-primary"></span></a></div>
-                        <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"
-                                                                                       class="site-menu-toggle py-5 js-menu-toggle text-white"><span
-                                        class="icon-menu h3 text-primary"></span></a></div>
-                        <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"
-                                                                                       class="site-menu-toggle py-5 js-menu-toggle text-white"><span
-                                        class="icon-menu h3 text-primary"></span></a></div>
+                        {#                        <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"#}
+                        {#                                                                                       class="site-menu-toggle py-5 js-menu-toggle text-white"><span#}
+                        {#                                        class="icon-menu h3 text-primary"></span></a></div>#}
+                        {#                        <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"#}
+                        {#                                                                                       class="site-menu-toggle py-5 js-menu-toggle text-white"><span#}
+                        {#                                        class="icon-menu h3 text-primary"></span></a></div>#}
+                        {#                        <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"#}
+                        {#                                                                                       class="site-menu-toggle py-5 js-menu-toggle text-white"><span#}
+                        {#                                        class="icon-menu h3 text-primary"></span></a></div>#}
+                        {#                        <div class="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"#}
+                        {#                                                                                       class="site-menu-toggle py-5 js-menu-toggle text-white"><span#}
+                        {#                                        class="icon-menu h3 text-primary"></span></a></div>#}
 
                         <div class="col-lg-6">
                             <nav class="site-navigation text-left mr-auto " role="navigation">
                                 <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                                    <li class="active"><a href="templates/about.html.twig" class="nav-link ">About</a></li>
-                                    <li class="active"><a href="{{ path('fos_user_profile_show') }}" class="nav-link">Profile</a></li>
-                                    <li class="active"><a href="{{ path('fos_user_security_logout') }}" class="nav-link">
+                                    <li class="active"><a href="templates/about.html.twig" class="nav-link ">About</a>
+                                    </li>
+                                    <li class="active"><a href="{{ path('fos_user_profile_show') }}" class="nav-link">Profile</a>
+                                    </li>
+                                    <li class="active"><a href="{{ path('fos_user_security_logout') }}"
+                                                          class="nav-link">
                                             {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                                         </a>
                                 </ul>
@@ -92,10 +99,30 @@
 
             </button>
             <div class="col-lg-4 text-center">
-                <div class="site-logo">
+                <div class=" row">
                     <em style="color: rosybrown !important;">Smarty House</em>
+                    {#                    <div class="col-1"> </div>#}
+                    {#                    <div class="col-1"> </div>#}
+                    <div class="col-1"></div>
+                    <div class="col-1"></div>
+                    <div class="col-5 text-white">
+                        {% if  app.user.username  is defined %}
+
+                            Logged in: {{ app.user.username }}
+                        {% else %}  Logged in: New User
+                        {% endif %}
+                    </div>
+                    <p style="text-align : center" class="col-1">
+                        {% if app.user.path is defined %}
+                        <img src="{{ asset(app.user.path) }}" alt="{{ app.user.username }}" width="30px" height="30px"
+                             class="rounded-circle">
+
+                        <br>
+                    </p> {% else %} {% endif %}
                 </div>
+            </div>
         </nav>
+
     </div>
 
 </header>
@@ -111,45 +138,54 @@
     <footer class="site-footer">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <div class="row">
-                        <div class="col-md-7">
-                            <h2 class="footer-heading mb-4">About Us</h2>
-                            <p>The world's leading smart house services provider, Smarty House works in 100 countries and is supported by 1.1 million members in the United states and close to 5 million globally. Smarty House is your new companion through your everyday life. We , Smarty House Team , promise you dear resident to be by your side in every step through this amazing experience.</p>
+                        {#                        <div class="col-md-7">#}
+                        <h2 class="footer-heading mb-4">About Us</h2>
+                        <p>The world's leading smart house services provider, Smarty House works in 100 countries
+                            and is supported by 1.1 million members in the United states and close to 5 million
+                            globally. Smarty House is your new companion through your everyday life. We , Smarty
+                            House Team , promise you dear resident to be by your side in every step through this
+                            amazing experience.</p>
 
-                        </div>
-                        <div class="col-md-4 ml-auto">
-                            <h2 class="footer-heading mb-4">Features</h2>
-                            <ul class="list-unstyled">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="{{path('terms_of_use_in')}}">Terms of Use</a></li>
-                                <li><a href="{{path('privacy_policy_in')}}">Privacy</a></li>
-                                <li><a href="mailto: smartyhousenoreply@gmail.com">Contact Us</a></li>
-                            </ul>
-                        </div>
+                        {#                        </div>#}
+
 
                     </div>
                 </div>
-                <div class="col-md-4 ml-auto">
+                <div class="col-md-3 ml-auto">
 
                     <div class="mb-5">
-                                                <h2 class="footer-heading mb-4">Subscribe to Newsletter</h2>
-                                                <form action="#" method="post" class="footer-suscribe-form">
-                                                    <div class="input-group mb-3">
-                                                        <input type="text" class="form-control rounded-0 border-secondary text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
-                                                        <div class="input-group-append">
-                                                            <button class="btn btn-primary text-white" type="button" id="button-addon2">Subscribe</button>
-                                                        </div>
-                                                    </div>
-                                            </div>
+                        {#                        <h2 class="footer-heading mb-4">Contact Us</h2>#}
+                        {#                        <form action="#" method="post" class="footer-suscribe-form">#}
+                        {#                            <div class="input-group mb-3">#}
+                        {#                                <input type="text"#}
+                        {#                                       class="form-control rounded-0 border-secondary text-white bg-transparent"#}
+                        {#                                       placeholder="Enter Email" aria-label="Enter Email"#}
+                        {#                                       aria-describedby="button-addon2">#}
+                        {#                                <div class="input-group-append">#}
+                        {#                                    <button class="btn btn-primary text-white" type="button" id="button-addon2">#}
+                        {#                                        Subscribe#}
+                        {#                                    </button>#}
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {#                    </div>#}
 
-
-                        <h2 class="footer-heading mb-4">Follow Us</h2>
-                        <a href="#about-section" class="smoothscroll pl-0 pr-3"><span class="icon-facebook"></span></a>
-                        <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
-                        <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                        <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
-                        </form>
+                        {#                        <div class="col-md-4 ml-auto">#}
+                        <h2 class="footer-heading mb-4">Features</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="{{ path('terms_of_use_in') }}">Terms of Use</a></li>
+                            <li><a href="{{ path('privacy_policy_in') }}">Privacy</a></li>
+                            <li><a href="mailto: smartyhousenoreply@gmail.com">Contact Us</a></li>
+                        </ul>
+                        {#                        </div>#}
+                        {#                    <h2 class="footer-heading mb-4">Contact Us</h2>#}
+                        {#                    <a href="#about-section" class="smoothscroll pl-0 pr-3"><span class="icon-facebook"></span></a>#}
+                        {#                    <a href="mailto: smartyhousenoreply@gmail.com" class="pl-3 pr-3">smartyhousenoreply@gmail.com<span class="icon-gmail"></span></a>#}
+                        {#                    <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>#}
+                        {#                    <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>#}
+                        {#                    </form>#}
                     </div>
                 </div>
                 {#            <div class="row pt-5 mt-5 text-center">#}
@@ -164,8 +200,9 @@
 
                 {#            </div>#}
             </div>
+        </div>
     </footer>
-
+    <p align="center">Copyrights : SmartyHouse Team 2020</p>
 
 </div>
 <script src={{ asset('js/jquery-3.3.1.min.js') }}></script>

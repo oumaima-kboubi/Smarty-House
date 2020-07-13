@@ -28,6 +28,11 @@ class Range extends Attribut
      */
     private $max;
 
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $unit;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +58,18 @@ class Range extends Attribut
     public function setMax(float $max): self
     {
         $this->max = $max;
+
+        return $this;
+    }
+
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(string $unit): self
+    {
+        $this->unit = $unit;
 
         return $this;
     }
