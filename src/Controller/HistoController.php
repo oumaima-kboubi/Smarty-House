@@ -3,11 +3,15 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Controller\Symfony\Component\HttpFoundation;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Device;
 use App\Entity\User;
 use App\Entity\Metric;
 use App\Entity\Attribut;
+use App\Entity\Camera;
+use App\Entity\Sensor;
+use App\Entity\Actuator;
 
 class HistoController extends AbstractController
 {
@@ -31,7 +35,7 @@ class HistoController extends AbstractController
     public function consult($id) {
 
         $historiques = $this->getDoctrine()->getRepository(Metric::class);
-        $exist = $historiques->findBy([ 'device' => $id, 'delete' => 0 ]);
+        $exist = $historiques->findMy($id);
         $today = date("Y-m-d");
         $lastweek = date("Y-m-d",strtotime('-7 day'));
         $lastmonth= date("Y-m-d",strtotime('-30 day'));
@@ -51,7 +55,7 @@ class HistoController extends AbstractController
                 'rests' => $rest
             ]);
         }
-        return new Response(
+        return new Symfony\Component\HttpFoundation\Response(
             "<h1>This page is currently empty</h1>"
         );
     }
@@ -63,7 +67,7 @@ class HistoController extends AbstractController
         $exist = $repository->find($id);
         if($exist) {
             $manager=$this->getDoctrine()->getManager();
-            $exist->setDelete(1);
+            $exist->setDeleted(1);
             $manager->persist($exist);
             $manager->flush();
             $this->addFlash('success', 'Ligne supprimé avec succes');
@@ -73,7 +77,7 @@ class HistoController extends AbstractController
         return $this->redirectToRoute('histo.consult', [ 'id' => $idd ]);
     }
     /**
-     * @Route("/consult/camera",  name="consult.camera")
+     * @Route("/see/camera",  name="consult.camera")
      */
     public function camera()
     {
@@ -83,14 +87,16 @@ class HistoController extends AbstractController
         ));
     }
     /**
-     * @Route("consult/device", name="consult.device")
+     * @Route("/see/device", name="consult.device")
      */
     public function actuator()
     {
-        $device = $this->getDoctrine()->getRepository(Device::class)->findDevices($houseid);
-        $actuator = $this->getDoctrine()->getRepository(Actuator::class)->findActuator($houseid);
-        $sensor = $this->getDoctrine()->getRepository(Sensor::class)->findSensor($houseid);
-        return $this->render('histo/list.html.twig', array(
+        $user = $this->getUser();
+        $me = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $user->getUsername()]);
+        $device = $this->getDoctrine()->getRepository(Device::class)->findDevices($me->getHouseId());
+        $actuator = $this->getDoctrine()->getRepository(Actuator::class)->findActuator($me->getHouseId());
+        $sensor = $this->getDoctrine()->getRepository(Sensor::class)->findSensor($me->getHouseId());
+        return $this->render('histo/sensor.html.twig', array(
             'devices' => $device,
             'actuators' => $actuator,
             'sensors' => $sensor

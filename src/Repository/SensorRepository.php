@@ -24,7 +24,7 @@ class SensorRepository extends ServiceEntityRepository
         return $em->createQuery(
             "SELECT r.name, c.apportEnergitique, c.seuilDeclenchement, c.typeDetection, c.typeSortie, c.createdAt
     FROM App\Entity\Device d, App\Entity\Room r, App\Entity\Attribut a, App\Entity\Sensor c, App\Entity\SmartHouse s
-    WHERE (s.id= :value) and (s.id =r.houseID) and (r.id=d.roomID) and (d.id=a.deviceId) and (a.actuatorId=c.id)")
+    WHERE (s.id= :value) and (s.id =r.houseID) and (r.id=d.roomID) and (d.id=a.device) and (a.actuator=c.id)")
             ->setParameter('value', $value)
             ->getResult()
             ;

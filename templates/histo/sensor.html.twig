@@ -1,4 +1,4 @@
-{% enxtends base.html.twig %}
+{% extends 'base.html.twig' %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/cam.css') }}">
@@ -14,7 +14,7 @@
                 <p class="card-text">{{ device.description }}</p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Installed In : {{ device.createdAt }}</li>
+                <li class="list-group-item">Installed In : {{ device.createdAt | date("d/m/Y") }}</li>
             </ul>
             <div class="card-body">
                 <a href="#" class="card-link">{{ device.room }}</a>
@@ -31,7 +31,7 @@
                 <li class="list-group-item">{{ sensor.seuilDeclenchement }}</li>
                 <li class="list-group-item">Detection Type : {{ sensor.typeDetection }}</li>
                 <li class="list-group-item">Output Type : {{ sensor.typeSortie }}</li>
-                <li class="list-group-item">Installed In : {{ sensor.createdAt }}</li>
+                <li class="list-group-item">Installed In : {{ sensor.createdAt | date("d/m/Y") }}</li>
             </ul>
             <div class="card-body">
                 <a href="#" class="card-link">{{ sensor.name }}</a>
@@ -47,7 +47,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Energie : {{ actuator.typeEnergieUtilisee }}</li>
                 <li class="list-group-item"> {{ actuator.principeMisEnOeuvre }}</li>
-                <li class="list-group-item">Installed In : {{ actuator.createdAt }}</li>
+                <li class="list-group-item">Installed In : {{ actuator.createdAt | date("d/m/Y") }}</li>
             </ul>
             <div class="card-body">
                 <a href="#" class="card-link">{{ actuator.name }}</a>

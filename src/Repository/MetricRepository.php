@@ -23,9 +23,9 @@ class MetricRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
         return $em->createQuery(
-            " select m.value, m.date, m.triggeredBy
+            " select m.id, m.value, m.date, m.triggeredBy
             from App\Entity\Metric m, App\Entity\Device d, App\Entity\Attribut a
-            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date > :week and m.date < :today and deleted <> 1
+            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date > :week and m.date < :today and m.deleted = 0
             order by m.date DESC")
             ->setParameter('val', $id)
             ->setParameter('week', $week)
@@ -38,9 +38,9 @@ class MetricRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
         return $em->createQuery(
-            " select m.value, m.date, m.triggeredBy
+            " select m.id, m.value, m.date, m.triggeredBy
             from App\Entity\Metric m, App\Entity\Device d, App\Entity\Attribut a
-            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date > :month and m.date < :week and deleted <> 1
+            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date > :month and m.date < :week and m.deleted = 0
             order by m.date DESC")
             ->setParameter('val', $id)
             ->setParameter('week', $week)
@@ -53,9 +53,9 @@ class MetricRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
         return $em->createQuery(
-            " select m.value, m.date, m.triggeredBy
+            " select m.id, m.value, m.date, m.triggeredBy
             from App\Entity\Metric m, App\Entity\Device d, App\Entity\Attribut a
-            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date < :month and m.deleted <> 1
+            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date < :month and m.deleted = 0
             order by m.date DESC")
             ->setParameter('val', $id)
             ->setParameter('month', $month)
@@ -66,7 +66,7 @@ class MetricRepository extends ServiceEntityRepository
     public function findByDatou($id, $datou, $today)
     {
         $em = $this->getEntityManager();
-        return $this->createQuery("
+        return $em->createQuery("
             select m.date, m.value
             from App\Entity\Metric m, App\Entity\Attribut a
             Where('m.attributId = a.id and a.deviceId = :val and h.date > :datou and h.date <= :today 
@@ -74,6 +74,18 @@ class MetricRepository extends ServiceEntityRepository
             ->setParameter('val', $id)
             ->setParameter('today', $today)
             ->setParameter('datou', $datou)
+            ->getResult()
+            ;
+    }
+    public function findMy($id)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery("
+            select m.date, m.value, m.triggeredBy
+            from App\Entity\Metric m, App\Entity\Attribut a
+            Where (m.attribut = a.id)and (a.device = :val) and (m.deleted =0)
+            order by m.date DESC")
+            ->setParameter('val', $id)
             ->getResult()
             ;
     }

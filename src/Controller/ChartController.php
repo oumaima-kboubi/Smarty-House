@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\News;
 
 class ChartController extends AbstractController
 {
@@ -17,7 +18,7 @@ class ChartController extends AbstractController
             ->getRepository(News::class);
         $news= $repository->findByThree();
 
-        return $this->render('news.html.twig', array(
+        return $this->render('chart/news.html.twig', array(
             'news' => $news
         ));
     }
