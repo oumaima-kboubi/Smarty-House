@@ -25,7 +25,7 @@ class MetricRepository extends ServiceEntityRepository
         return $em->createQuery(
             " select m.value, m.date, m.triggeredBy
             from App\Entity\Metric m, App\Entity\Device d, App\Entity\Attribut a
-            where d.id = a.deviceId and m.attributId = a.id and d.id = :val and m.date > :week and m.date < :today and deleted <> 1
+            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date > :week and m.date < :today and deleted <> 1
             order by m.date DESC")
             ->setParameter('val', $id)
             ->setParameter('week', $week)
@@ -40,7 +40,7 @@ class MetricRepository extends ServiceEntityRepository
         return $em->createQuery(
             " select m.value, m.date, m.triggeredBy
             from App\Entity\Metric m, App\Entity\Device d, App\Entity\Attribut a
-            where d.id = a.deviceId and m.attributId = a.id and d.id = :val and m.date > :month and m.date < :week and deleted <> 1
+            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date > :month and m.date < :week and deleted <> 1
             order by m.date DESC")
             ->setParameter('val', $id)
             ->setParameter('week', $week)
@@ -55,7 +55,7 @@ class MetricRepository extends ServiceEntityRepository
         return $em->createQuery(
             " select m.value, m.date, m.triggeredBy
             from App\Entity\Metric m, App\Entity\Device d, App\Entity\Attribut a
-            where d.id = a.deviceId and m.attributId = a.id and d.id = :val and m.date < :month and m.deleted <> 1
+            where d.id = a.device and m.attribut = a.id and d.id = :val and m.date < :month and m.deleted <> 1
             order by m.date DESC")
             ->setParameter('val', $id)
             ->setParameter('month', $month)

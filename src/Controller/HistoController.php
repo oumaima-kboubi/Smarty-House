@@ -4,6 +4,10 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Device;
+use App\Entity\User;
+use App\Entity\Metric;
+use App\Entity\Attribut;
 
 class HistoController extends AbstractController
 {
@@ -11,10 +15,12 @@ class HistoController extends AbstractController
      * @Route("/histo", name="histo")
      */
     public function list(){
+        $user = $this->getUser();
+        $me = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $user->getUsername()]);
         $repository=$this
             ->getDoctrine()
             ->getRepository(Device::class);
-        $devices=$repository->findDevices();
+        $devices=$repository->findDevices($me->getHouseId());
         return $this->render('histo/his.html.twig',[
             'devices' => $devices
         ]);
@@ -23,8 +29,9 @@ class HistoController extends AbstractController
      * @Route("/consult/{id}", name="histo.consult")
      */
     public function consult($id) {
+
         $historiques = $this->getDoctrine()->getRepository(Metric::class);
-        $exist = $historiques->findBy([ 'deviceId' => $id, 'delete' => 0 ]);
+        $exist = $historiques->findBy([ 'device' => $id, 'delete' => 0 ]);
         $today = date("Y-m-d");
         $lastweek = date("Y-m-d",strtotime('-7 day'));
         $lastmonth= date("Y-m-d",strtotime('-30 day'));

@@ -23,7 +23,7 @@ class DeviceRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
         return $em->createQuery(
-            "SELECT r.name as room, d.name, d.description, d.icon, d.createdAt, d.path
+            "SELECT r.name as room, d.name, d.id, d.description, d.icon, d.createdAt, d.path
     FROM App\Entity\Device d, App\Entity\Room r, App\Entity\SmartHouse s
     WHERE (s.id= :value) and (s.id =r.houseID) and (r.id=d.roomID)
     ORDER BY d.id ASC"
