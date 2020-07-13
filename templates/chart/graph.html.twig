@@ -1,4 +1,4 @@
-{% extends 'news.html.twig' %}
+{% extends 'chart/news.html.twig' %}
 
 {% block title %}Graph{% endblock %}
 
@@ -20,7 +20,7 @@
                     <div class="breadcrumbs-top float-md-right">
                         <div class="breadcrumb-wrapper mr-1">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ path('chart') }}" >Home</a>
+                                <li class="breadcrumb-item"><a href="{{ path('chart.news') }}" >Home</a>
                                 </li>
                                 <li class="breadcrumb-item active">Charts
                                 </li>
@@ -184,10 +184,6 @@
 
 {% block script %}
     <!-- BEGIN JS-->
-    <script src="{{asset('theme-assets/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('theme-assets/vendors/js/charts/chart.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('theme-assets/js/core/app-menu-lite.js')}}" type="text/javascript"></script>
-    <script src="{{asset('theme-assets/js/core/app-lite.js')}}" type="text/javascript"></script>
     <script src="{{asset('theme-assets/js/scripts/charts/chartjs/bar/column.js')}}" type="text/javascript"></script>
     <script src="{{asset('theme-assets/js/scripts/charts/chartjs/bar/bar.js')}}" type="text/javascript"></script>
     <script src="{{asset('theme-assets/js/scripts/charts/chartjs/line/line.js')}}" type="text/javascript"></script>

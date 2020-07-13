@@ -4,7 +4,7 @@
         see History
     {% endblock %}
 
-    {% block stylesheets %}
+    {% block stylesheet %}
         <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.css') }}">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset('css/history.css') }}">
@@ -22,8 +22,8 @@
     {% endblock %}
 
     {% block body %}
-        <body>
-    <div class="container">
+
+    <div class="container" style="padding-top: 70px;">
         <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
@@ -50,7 +50,6 @@
         <!-- Today -->
         <nav class="navbar navbar-light">
             <span>
-                <img src="{{ gadget.path }}" width="40" height="40" class="d-inline-block align-top" alt="w">
                 <h3>Today</h3>
             </span>
         </nav>
@@ -95,7 +94,6 @@
         <!-- Last Week -->
         <nav class="navbar navbar-light">
             <a class="navbar-brand" href="#">
-                <img src="{{ gadget.path }}" width="40" height="40" class="d-inline-block align-top" alt="w">
                 Last Week
             </a>
         </nav>
@@ -124,7 +122,6 @@
         <!-- Last month -->
         <nav class="navbar navbar-light">
             <a class="navbar-brand" href="#">
-                <img src="{{ gadget.path }}" width="40" height="40" class="d-inline-block align-top" alt="w">
                 Last Month
             </a>
         </nav>
@@ -154,7 +151,7 @@
         <!-- The Rest -->
         <nav class="navbar navbar-light">
             <a class="navbar-brand" href="#">
-                <img src="{{ gadget.path }}" width="40" height="40" class="d-inline-block align-top" alt="w">
+                <img src="{{ gadget.path }}" width="40" height="40" class="d-inline-block align-top" alt="">
                 Some Old Stuff
             </a>
         </nav>

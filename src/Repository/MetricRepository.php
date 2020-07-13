@@ -69,7 +69,7 @@ class MetricRepository extends ServiceEntityRepository
         return $em->createQuery("
             select m.date, m.value
             from App\Entity\Metric m, App\Entity\Attribut a
-            Where('m.attributId = a.id and a.deviceId = :val and h.date > :datou and h.date <= :today 
+            Where m.attribut = a.id and a.device = :val and m.date >= :datou and m.date <= :today 
             order by m.date DESC")
             ->setParameter('val', $id)
             ->setParameter('today', $today)
@@ -81,7 +81,7 @@ class MetricRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
         return $em->createQuery("
-            select m.date, m.value, m.triggeredBy
+            select m.id, m.date, m.value, m.triggeredBy
             from App\Entity\Metric m, App\Entity\Attribut a
             Where (m.attribut = a.id)and (a.device = :val) and (m.deleted =0)
             order by m.date DESC")
@@ -89,16 +89,17 @@ class MetricRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
-    public function findDevice($value)
+    public function findDevice($id, $value)
     {
-        $em = $this->getEntityManager() ;
+        $em = $this->getEntityManager();
         return $em->createQuery(
-            " select a.name, COUNT(IDENTITY(m.attributId)) as value
-                from App\Entity\Metric h, App\Entity\Attribut a
-                 where a.id=m.attributId and h.date >= :val 
-                group By m.attributId"
+            " select DISTINCT(d.name) as name, COUNT(IDENTITY(m.attribut)) as value
+                from App\Entity\Metric m, App\Entity\Attribut a,  App\Entity\Device d, App\Entity\Room r, App\Entity\SmartHouse s
+                 where a.id = m.attribut and m.date >= :val and a.device=d.id and d.roomID=r.id and r.houseID=s.id and s.id=:id 
+                group By m.attribut"
         )
             ->setParameter('val', $value)
+            ->setParameter('id', $id)
             ->getResult()
             ;
     }
@@ -107,9 +108,9 @@ class MetricRepository extends ServiceEntityRepository
         $em = $this->getEntityManager();
         return $em->createQuery(
             "select m.date, m.value
-            from App\Entity\Metric m, App\Entity\Attribut a 
-            Where a.deviceId = :val and m.deviceId=a.id
-            order by m.date ASC")
+            from App\Entity\Metric m, App\Entity\Attribut a,  App\Entity\Device d
+            Where d.id = :val and a.device = d.id and a.id = m.attribut
+            order by m.date DESC")
             ->setParameter('val', $value)
             ->getResult()
             ;

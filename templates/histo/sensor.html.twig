@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
+{% block stylesheet %}
     <link rel="stylesheet" href="{{ asset('css/cam.css') }}">
 {% endblock %}
 
 {% block body %}
-
+        <div class="row">
     {% for device in devices %}
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="{{ device.path}}" alt="Device img">
@@ -54,5 +54,5 @@
             </div>
         </div>
     {% endfor %}
-
+        </div>
 {% endblock %}

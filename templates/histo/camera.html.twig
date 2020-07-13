@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
+{% block stylesheet %}
     <link rel="stylesheet" href="{{ asset('css/cam.css') }}">
 {% endblock %}
 
 {% block body %}
-
+  <div class="row">
   {% for cam in camera %}
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 20rem;">
       <img class="card-img-top" src="{{ asset('images/consult/photogcamera.jpg') }}" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">{{ cam.name }}</h5>
@@ -20,6 +20,6 @@
       </div>
     </div>
     {% endfor %}
-
+  </div>
 
 {% endblock %}
