@@ -65,7 +65,7 @@ class RoutingController extends AbstractController
      * @Route("/homeOut",name="routing.homeOut")
      */
     public function acceuil(){
-        return $this->render('lobby.html.twig');
+        return $this->render('aboutUs.html.twig');
     }
 
 //    /**
