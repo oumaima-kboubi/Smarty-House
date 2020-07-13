@@ -159,12 +159,10 @@ class GenerateDataController extends AbstractController
                 break;
             case 'Living Room':
                 array_push($deviceNames,"Mood Light");
-                array_push($deviceNames,"O2 sensor");
                 array_push($deviceNames,"Air Conditioner");
                 break;
             case 'Bed Room':
                 array_push($deviceNames,"Mood Light");
-                array_push($deviceNames,"O2 sensor");
                 array_push($deviceNames,"Air Conditioner");
                 break;
             case 'Hallway':
@@ -203,7 +201,6 @@ class GenerateDataController extends AbstractController
                 array_push($deviceNames,"Motion Sensor");
             break;
             case 'Baby Room':
-                array_push($deviceNames,"O2 sensor");
                 array_push($deviceNames,"Air Conditioner");
             break;
             default:
@@ -224,9 +221,25 @@ class GenerateDataController extends AbstractController
         $device->setName($deviceName);
         $device->setIcon("placeHolder");
         $device->setRoomID($room);
-        $device->setType("placeHolder");
         $device->setDescription($faker->text(240));
         $device->setCreatedAt($faker->dateTime());
+        switch ($deviceName) {
+            case 'Lamp':
+            case 'Mood Light':
+                $device->setType("lighting");
+                break;
+            case 'Motion Sensor':
+            case 'Smoke Detector':
+                $device->setType("security");
+                break;
+            case 'Heat Sensor':
+            case 'Air Conditioner':
+                $device->setType("temperature");
+                break;
+            default:
+                $device->setType("undefined");
+                break;
+        }
         $attributes = $this->craeteAttributes($device);
         foreach ($attributes as $attribute) {
             $attribute->setDevice($device);
@@ -266,9 +279,6 @@ class GenerateDataController extends AbstractController
             case 'Mood Light':
                 array_push($atts,$this->newRange("intensity",0,100,"Si","actuator"));
                 array_push($atts,$this->newToggle("Switch","On","Off","actuator"));
-                break;
-            case 'O2 Sensor':
-                array_push($atts,$this->newNumeric("O2 Level","%","sensor"));
                 break;
             case 'Air Conditioner':
                 array_push($atts,$this->newRange("Fan Speed",0,10,"Rpm","actuator"));

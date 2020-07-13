@@ -1,5 +1,4 @@
 const socket = new WebSocket("ws://localhost:3001");
-
 socket.addEventListener("open", function() {
     console.log("CONNECTED");
     $('[id^=attributeActuat]').change(function(){
@@ -36,8 +35,9 @@ socket.addEventListener("open", function() {
     });
     socket.addEventListener("message", function(e) {
         data = JSON.parse(e.data);
-        let idSensor = "attributeSensor"+data.id.substr(15);
-        let idActuat = "attributeActuat"+data.id.substr(15);
+        let id = data.id.substr(15);
+        let idSensor = "attributeSensor"+id;
+        let idActuat = "attributeActuat"+id;
         var element;
         
         element = $('#'+idActuat);
@@ -47,11 +47,19 @@ socket.addEventListener("open", function() {
         console.log(idActuat + " " + idSensor)
         if(element.attr('type') == "checkbox"){
             element.prop('checked',data.value);
+            if(data.value){
+                $("#toggleLabel"+id).text($("#toggleLabel"+id).attr("data-onLable"));
+                console.log($("#toggleLabel"+id).attr("data-onLable"))
+            }
+            else{
+                $("#toggleLabel"+id).text($("#toggleLabel"+id).attr("data-offLable"));
+                console.log($("#toggleLabel"+id).attr("data-offLable"))
+            }
         }else{
             element.val(data.value);
         }
-        if($('#graphAttr'+data.id.substr(15)).attr('data-visible')=='true')
-            updateGraph(data.id.substr(15));
+        if($('#graphAttr'+id).attr('data-visible')=='true')
+            updateGraph(id);
     });
 });
 

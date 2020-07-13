@@ -13,11 +13,11 @@ class DeviceController extends AbstractController
      */
     public function index($paramRoom)
     {
-        $user = $this->getUser();
+        /*$user = $this->getUser();
         $repository = $this->getDoctrine()->getRepository(User::class);
-        $me = $repository->findOneBy(['username' => $user->getUsername()]);
+        $me = $repository->findOneBy(['username' => $user->getUsername()]);*/
         $repository = $this->getDoctrine()->getRepository('App:SmartHouse');
-        $house = $repository->find($me->getHouseID());
+        /*$house = $repository->find($me->getHouseID());*/ $house = $repository->find(4); //<--- delete this and uncomment the rest
         if($paramRoom == 'all'){
             $rooms = $house->getRooms();
         }else{

@@ -19,21 +19,22 @@
                                                 <div class="attribute-lable col" style="color:white; padding:0 0 0 5%">
                                                     {{attribute.name}}
                                                 </div>     
-                                                <div class="attribute-value col" style="align:right; color:white">
+                                                <div class="attribute-value col" style="text-align:center; color:white">
                                                     {% if attribute.type == "range" %}
                                                         {{attribute.min}}
-                                                        <input type="range" min="{{attribute.min}}" max="{{attribute.max}}" value="{{attribute.getLatestValue}}" id="attributeActuat{{attribute.id}}">
+                                                        <input type="range"  min="{{attribute.min}}" max="{{attribute.max}}" value="{{attribute.getLatestValue}}" id="attributeActuat{{attribute.id}}">
                                                         {{attribute.max}}                                                      
                                                     {% elseif attribute.type == "toggle" %}
                                                         {% if attribute.getLatestValue %}
-                                                            {{attribute.onLabel}}
+                                                            <span id="toggleLabel{{attribute.id}}" data-onLable="{{attribute.onLabel}}" data-offLable="{{attribute.offLable}}">{{attribute.onLabel}}</span>
                                                             <input type="checkbox" checked {% if attribute.deviceType == "sensor" %}id="attributeSensor{{attribute.id}}" disabled {% else %}id="attributeActuat{{attribute.id}}" {% endif %}>
                                                         {% else %}
-                                                            {{attribute.offLable}}
+                                                            <span id="toggleLabel{{attribute.id}}" data-onLable="{{attribute.onLabel}}" data-offLable="{{attribute.offLable}}">{{attribute.offLable}}</span>
                                                             <input type="checkbox" {% if attribute.deviceType == "sensor" %}id="attributeSensor{{attribute.id}}" disabled {% else %}id="attributeActuat{{attribute.id}}" {% endif %}>
                                                         {% endif %}
                                                     {% else %}
-                                                        <input type="text" style="background-color:transparent; border:none; color:white; text-align:center" readonly value="{{attribute.getLatestValue}}" id="attributeSensor{{attribute.id}}">
+                                                        <input class="border-0" type="text" style="background-color:transparent; border:none; color:white; text-align:right" readonly value="{{attribute.getLatestValue}}" id="attributeSensor{{attribute.id}}">
+                                                        <span>{{attribute.unit}}</span>
                                                     {% endif %}
                                                 </div>
                                                     <div class="col-3">
